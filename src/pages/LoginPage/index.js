@@ -16,7 +16,7 @@ export default function Login() {
           resizeMode="contain"
         />
         <Text style={styles.description}>
-          A organização do seu negócio na palma das mãos!
+          A organização do seu negócio na palma das mãos!asads
         </Text>
       </Animatable.View>
 
