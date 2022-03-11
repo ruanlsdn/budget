@@ -15,18 +15,20 @@ export default function Login() {
           source={require("../../assets/logo.png")}
           resizeMode="contain"
         />
-        <Text style={styles.description}>
-          A organização do seu negócio na palma das mãos!asads
+        <Text style={styles.titleLogo}>Business Management</Text>
+        <Text style={styles.descriptionLogo}>
+          A organização do seu negócio em suas mãos!
         </Text>
       </Animatable.View>
 
-      <Animatable.View animation="fadeInUp" style={styles.containerForm}>
+      <Animatable.View delay={1000} animation="fadeInUp" style={styles.containerForm}>
         <Text style={styles.formTitle}>Login</Text>
         <TextInput
           style={{
             borderRadius: 20,
             marginLeft: 20,
             marginRight: 20,
+            marginBottom: 5,
           }}
           label="Usuário"
         />
@@ -36,7 +38,10 @@ export default function Login() {
           secureTextEntry
           right={<TextInput.Icon name="eye" />}
         />
-        <TouchableOpacity onPress={() => navigation.navigate("Main")}style={styles.button}>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("Main")}
+          style={styles.button}
+        >
           <Text style={{ color: "#FFF" }}>Acessar</Text>
         </TouchableOpacity>
       </Animatable.View>
@@ -55,12 +60,19 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  description: {
+  titleLogo: {
     fontSize: 20,
     color: "#FFF",
     fontWeight: "bold",
     textAlign: "center",
     marginVertical: 15,
+    marginHorizontal: 15,
+  },
+  descriptionLogo: {
+    fontSize: 15,
+    color: "#FFF",
+    fontWeight: "bold",
+    textAlign: "center",
     marginHorizontal: 15,
   },
   formTitle: {
@@ -69,7 +81,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
     marginTop: 20,
-    marginBottom: 50,
+    marginBottom: 25,
   },
   containerForm: {
     flex: 1,
@@ -78,13 +90,12 @@ const styles = StyleSheet.create({
     backgroundColor: "#DEDEDE",
   },
   button: {
-    position: "absolute",
     backgroundColor: "#253743",
     borderRadius: 20,
     alignSelf: "center",
     width: "90%",
     height: 50,
-    bottom: "15%",
+    marginTop: 40,
     alignItems: "center",
     justifyContent: "center",
   },
