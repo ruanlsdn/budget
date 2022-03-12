@@ -1,11 +1,9 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 
 import Login from "../pages/LoginPage";
 import MainNavigator from "./MainNavigator";
 
 const Stack = createNativeStackNavigator();
-const Tab = createMaterialTopTabNavigator();
 
 export default function LoginNavigator() {
   return (
