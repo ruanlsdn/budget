@@ -1,9 +1,28 @@
 import React, { useState } from "react";
 import { Modal, StyleSheet, Text, View, TouchableOpacity } from "react-native";
-import { DataTable, TextInput } from "react-native-paper";
+import { DataTable, Divider, TextInput } from "react-native-paper";
+import ProductRow from "./productRow";
 
 export default function Products() {
   const [modal, setModal] = useState(false);
+  const products = [
+    {
+      product: "Asinha de Frango",
+      price: 4.7,
+    },
+    {
+      product: "Contrafilé (120g)",
+      price: 4.2,
+    },
+    {
+      product: "Contrafilé (80g)",
+      price: 3.3,
+    },
+    {
+      product: "Coração",
+      price: 3.3,
+    },
+  ];
   return (
     <View style={styles.container}>
       <Modal animationType="slide" transparent={true} visible={modal}>
@@ -29,7 +48,6 @@ export default function Products() {
                 </Text>
               </TouchableOpacity>
             </View>
-
             <TextInput
               style={{ borderRadius: 5, height: 50, marginVertical: 20 }}
               label="Descrição"
@@ -45,20 +63,51 @@ export default function Products() {
         </View>
       </Modal>
 
-      <View style={styles.menuContainer}></View>
       <View style={styles.contentContainer}>
-        <DataTable>
-          <DataTable.Header>
-            <DataTable.Title>Descrição</DataTable.Title>
-            <DataTable.Title numeric>Preço</DataTable.Title>
-            <DataTable.Title numeric>Ações</DataTable.Title>
-          </DataTable.Header>
-          <DataTable.Row>
-            <DataTable.Cell>Frozen yogurt</DataTable.Cell>
-            <DataTable.Cell numeric>159</DataTable.Cell>
-            <DataTable.Cell numeric>6.0</DataTable.Cell>
-          </DataTable.Row>
-        </DataTable>
+        <View style={{ flexDirection: "row", marginTop: 20, height: "5%" }}>
+          <View style={{ width: "50%", alignItems: "center" }}>
+            <Text
+              style={{
+                fontSize: 20,
+                fontWeight: "bold",
+                alignItems: "center",
+              }}
+            >
+              Descrição
+            </Text>
+          </View>
+          <View style={{ width: "25%", alignItems: "center" }}>
+            <Text
+              style={{
+                fontSize: 20,
+                fontWeight: "bold",
+                alignItems: "center",
+              }}
+            >
+              Preço
+            </Text>
+          </View>
+          <View style={{ width: "25%", alignItems: "center" }}>
+            <Text
+              style={{
+                fontSize: 20,
+                fontWeight: "bold",
+                alignItems: "center",
+              }}
+            >
+              Ações
+            </Text>
+          </View>
+        </View>
+        <View style={{ flex: 1, flexDirection: "column", width: "100%" }}>
+          <Divider style={{ height: 3 }} />
+          {products.map((product) => (
+            <>
+              <ProductRow product={product.product} price={product.price} />
+              <Divider style={{ height: 3 }} />
+            </>
+          ))}
+        </View>
         <TouchableOpacity
           onPress={() => setModal(!modal)}
           style={styles.button}
@@ -76,7 +125,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#253743",
   },
   contentContainer: {
-    flex: 12,
+    flex: 1,
     backgroundColor: "#DEDEDE",
   },
   centeredView: {
@@ -134,4 +183,5 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+ 
 });
