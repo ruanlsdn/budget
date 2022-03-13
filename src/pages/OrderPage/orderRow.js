@@ -62,7 +62,7 @@ export default function OrderRow({ selectedProducts, product }) {
             activeOutlineColor="black"
             onChangeText={(text) => {
               setAmount(text);
-              if (text != "") {
+              if (text != "" && text != "0") {
                 setDisabled(false);
               } else {
                 setChecked(false);
