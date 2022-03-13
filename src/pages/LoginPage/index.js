@@ -21,7 +21,11 @@ export default function Login() {
         </Text>
       </Animatable.View>
 
-      <Animatable.View delay={1000} animation="fadeInUp" style={styles.containerForm}>
+      <Animatable.View
+        delay={1000}
+        animation="fadeInUp"
+        style={styles.containerForm}
+      >
         <Text style={styles.formTitle}>Login</Text>
         <TextInput
           style={{
@@ -30,12 +34,14 @@ export default function Login() {
             marginRight: 20,
             marginBottom: 5,
           }}
+          activeUnderlineColor="#253743"
           label="Usuário"
         />
         <TextInput
           style={{ borderRadius: 20, marginLeft: 20, marginRight: 20 }}
           label="Senha"
           secureTextEntry
+          activeUnderlineColor="#253743"
           right={<TextInput.Icon name="eye" />}
         />
         <TouchableOpacity

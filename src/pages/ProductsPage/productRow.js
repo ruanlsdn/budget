@@ -1,7 +1,7 @@
 import React from "react";
-import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
-import { Divider } from "react-native-paper";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Icon from "react-native-vector-icons/AntDesign";
+
 export default function ProductRow(props) {
   return (
     <>
@@ -32,10 +32,13 @@ export default function ProductRow(props) {
           }}
         >
           <View style={{ flexDirection: "row" }}>
-            <TouchableOpacity style={{marginRight: 20}}>
+            <TouchableOpacity
+              style={{ marginRight: 20 }}
+              onPress={() => console.log("update")}
+            >
               <Icon name="form" size={25} />
             </TouchableOpacity>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => console.log("delete")}>
               <Icon name="delete" size={25} />
             </TouchableOpacity>
           </View>
@@ -48,6 +51,6 @@ export default function ProductRow(props) {
 const styles = StyleSheet.create({
   row: {
     flexDirection: "row",
-    height: "5%",
+    height: 45,
   },
 });

@@ -23,6 +23,7 @@ export default function Products() {
       price: 3.3,
     },
   ];
+
   return (
     <View style={styles.container}>
       <Modal animationType="slide" transparent={true} visible={modal}>
@@ -64,42 +65,18 @@ export default function Products() {
       </Modal>
 
       <View style={styles.contentContainer}>
-        <View style={{ flexDirection: "row", marginTop: 20, height: "5%" }}>
+        <View style={styles.tableHeader}>
           <View style={{ width: "50%", alignItems: "center" }}>
-            <Text
-              style={{
-                fontSize: 20,
-                fontWeight: "bold",
-                alignItems: "center",
-              }}
-            >
-              Descrição
-            </Text>
+            <Text style={styles.tableHeaderText}>Descrição</Text>
           </View>
           <View style={{ width: "25%", alignItems: "center" }}>
-            <Text
-              style={{
-                fontSize: 20,
-                fontWeight: "bold",
-                alignItems: "center",
-              }}
-            >
-              Preço
-            </Text>
+            <Text style={styles.tableHeaderText}>Preço</Text>
           </View>
           <View style={{ width: "25%", alignItems: "center" }}>
-            <Text
-              style={{
-                fontSize: 20,
-                fontWeight: "bold",
-                alignItems: "center",
-              }}
-            >
-              Ações
-            </Text>
+            <Text style={styles.tableHeaderText}>Ações</Text>
           </View>
         </View>
-        <View style={{ flex: 1, flexDirection: "column", width: "100%" }}>
+        <View style={styles.tableRows}>
           <Divider style={{ height: 3 }} />
           {products.map((product) => (
             <>
@@ -128,6 +105,13 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#DEDEDE",
   },
+  tableHeader: { flexDirection: "row", marginTop: 20, height: "5%" },
+  tableHeaderText: {
+    fontSize: 20,
+    fontWeight: "bold",
+    alignItems: "center",
+  },
+  tableRows: { flex: 1, flexDirection: "column", width: "100%" },
   centeredView: {
     flex: 1,
     justifyContent: "center",
@@ -183,5 +167,4 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
- 
 });
