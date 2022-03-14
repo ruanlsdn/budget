@@ -1,15 +1,12 @@
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import { useNavigation } from "@react-navigation/native";
 import React from "react";
-import { Modal, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import Order from "../pages/OrderPage";
+import { StyleSheet, Text, View } from "react-native";
+import OrderStackScreen from "../pages/OrderPage/orderStackScreen";
 import Products from "../pages/ProductsPage";
 
 const Tab = createMaterialTopTabNavigator();
 
 export default function MainNavigator() {
-  const navigation = useNavigation();
-
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -19,9 +16,13 @@ export default function MainNavigator() {
         screenOptions={{
           tabBarActiveTintColor: "white",
           tabBarStyle: { backgroundColor: "#253743" },
+          tabBarIndicatorStyle: {
+            height: 3,
+            backgroundColor: "white",
+          },
         }}
       >
-        <Tab.Screen name="Orçamentos" component={Order} />
+        <Tab.Screen name="Orçamento" component={OrderStackScreen} />
         <Tab.Screen name="Produtos" component={Products} />
       </Tab.Navigator>
     </View>

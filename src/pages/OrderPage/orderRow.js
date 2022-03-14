@@ -39,7 +39,6 @@ export default function OrderRow({ selectedProducts, product }) {
               } else {
                 removeWhenUnchecked();
               }
-              console.log(selectedProducts);
             }}
           />
         </View>
@@ -69,7 +68,6 @@ export default function OrderRow({ selectedProducts, product }) {
                 setDisabled(true);
                 removeWhenUnchecked();
               }
-              console.log(selectedProducts)
             }}
           />
         </View>

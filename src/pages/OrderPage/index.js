@@ -4,7 +4,7 @@ import OrderRow from "./orderRow";
 import { Divider } from "react-native-paper";
 import Icon from "react-native-vector-icons/Feather";
 
-export default function Order() {
+export default function Order({ navigation }) {
   const products = [
     {
       id: 1,
@@ -64,14 +64,20 @@ export default function Order() {
       <View style={styles.tableRows}>
         <Divider style={{ height: 3 }} />
         {products.map((product) => (
-          
           <>
             <OrderRow selectedProducts={selectedProducts} product={product} />
             <Divider style={{ height: 3 }} />
           </>
         ))}
       </View>
-      <TouchableOpacity onPress={() => setModal(!modal)} style={styles.button}>
+      <TouchableOpacity
+        onPress={() =>
+          navigation.navigate("Budget", {
+            products: selectedProducts,
+          })
+        }
+        style={styles.button}
+      >
         <Icon color="white" name="shopping-cart" size={25} />
       </TouchableOpacity>
     </View>
