@@ -22,7 +22,7 @@ export default function ProductRow(props) {
             justifyContent: "center",
           }}
         >
-          <Text style={{ fontSize: 18 }}>{props.price}</Text>
+          <Text style={{ fontSize: 18 }}>{parseFloat(props.price).toFixed(2)}</Text>
         </View>
         <View
           style={{

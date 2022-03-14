@@ -29,7 +29,7 @@ export default function BudgetRow({ item }) {
           justifyContent: "center",
         }}
       >
-        <Text>{"R$" + item.product.price}</Text>
+        <Text>{"R$" + parseFloat(item.product.price).toFixed(2)}</Text>
       </View>
       <View
         style={{
@@ -38,7 +38,7 @@ export default function BudgetRow({ item }) {
           justifyContent: "center",
         }}
       >
-        <Text>{"R$" + item.product.price * 5}</Text>
+        <Text>{"R$" + parseFloat(item.product.price * 5).toFixed(2)}</Text>
       </View>
       <View
         style={{
@@ -47,7 +47,7 @@ export default function BudgetRow({ item }) {
           justifyContent: "center",
         }}
       >
-        <Text>{"R$" + item.amount * item.product.price}</Text>
+        <Text>{"R$" +parseFloat( item.amount * item.product.price).toFixed(2)}</Text>
       </View>
     </View>
   );
