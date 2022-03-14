@@ -7,13 +7,32 @@ export default function OrderRow({ selectedProducts, product }) {
   const [checked, setChecked] = useState(false);
   const [disabled, setDisabled] = useState(true);
   const [amount, setAmount] = useState(0);
+  
+  function insert() {
+    selectedProducts.push({
+      product: product,
+      amount: amount,
+    });
+  }
 
-  function removeWhenUnchecked() {
+  function find() {
     for (let i = 0; i < selectedProducts.length; i++) {
       if (selectedProducts[i].product === product) {
-        selectedProducts.splice(i, 1);
+        return i;
       }
     }
+  }
+
+  function update() {
+    selectedProducts[find()].amount = amount;
+  }
+
+  function remove() {
+    selectedProducts.splice(find(), 1);
+  }
+
+  if (checked) {
+    update();
   }
 
   return (
@@ -31,14 +50,7 @@ export default function OrderRow({ selectedProducts, product }) {
             status={checked ? "checked" : "unchecked"}
             onPress={() => {
               setChecked(!checked);
-              if (!checked) {
-                selectedProducts.push({
-                  product: product,
-                  amount: amount,
-                });
-              } else {
-                removeWhenUnchecked();
-              }
+              !checked ? insert() : remove();
             }}
           />
         </View>
@@ -66,7 +78,7 @@ export default function OrderRow({ selectedProducts, product }) {
               } else {
                 setChecked(false);
                 setDisabled(true);
-                removeWhenUnchecked();
+                remove();
               }
             }}
           />
