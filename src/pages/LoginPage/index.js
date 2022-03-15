@@ -28,20 +28,28 @@ export default function Login() {
       >
         <Text style={styles.formTitle}>Login</Text>
         <TextInput
+          mode="outlined"
           style={{
             borderRadius: 20,
             marginLeft: 20,
             marginRight: 20,
             marginBottom: 5,
+            backgroundColor: "#DEDEDE",
           }}
-          activeUnderlineColor="#253743"
+          activeOutlineColor="black"
           label="Usuário"
         />
         <TextInput
-          style={{ borderRadius: 20, marginLeft: 20, marginRight: 20 }}
+          mode="outlined"
+          style={{
+            borderRadius: 20,
+            marginLeft: 20,
+            marginRight: 20,
+            backgroundColor: "#DEDEDE",
+          }}
           label="Senha"
           secureTextEntry
-          activeUnderlineColor="#253743"
+          activeOutlineColor="black"
           right={<TextInput.Icon name="eye" />}
         />
         <TouchableOpacity

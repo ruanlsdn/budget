@@ -17,7 +17,7 @@ export default function Budget({ route }) {
           <View style={styles.tableHeader}>
             <View
               style={{
-                width: "13%",
+                width: "14%",
                 alignItems: "center",
                 justifyContent: "center",
               }}

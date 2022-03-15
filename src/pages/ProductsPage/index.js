@@ -43,17 +43,32 @@ export default function Products() {
                 onPress={() => setModal(!modal)}
               >
                 <Text
-                  style={{ fontSize: 20, fontWeight: "bold", marginLeft: 160 }}
+                  style={{
+                    fontSize: 20,
+                    fontWeight: "bold",
+                    marginLeft: "55%",
+                  }}
                 >
                   X
                 </Text>
               </TouchableOpacity>
             </View>
             <TextInput
-              style={{ borderRadius: 5, height: 50, marginVertical: 20 }}
+              mode="outlined"
+              activeOutlineColor="black"
+              style={{
+                borderRadius: 5,
+                height: 50,
+                backgroundColor: "white",
+              }}
               label="Descrição"
             />
-            <TextInput style={{ borderRadius: 5, height: 50 }} label="Preço" />
+            <TextInput
+              mode="outlined"
+              activeOutlineColor="black"
+              style={{ borderRadius: 5, height: 50, backgroundColor: "white" }}
+              label="Preço"
+            />
             <TouchableOpacity
               style={styles.buttonForm}
               onPress={() => setModal(!modal)}
