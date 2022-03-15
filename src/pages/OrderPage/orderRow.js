@@ -7,7 +7,7 @@ export default function OrderRow({ selectedProducts, product }) {
   const [checked, setChecked] = useState(false);
   const [disabled, setDisabled] = useState(true);
   const [amount, setAmount] = useState(0);
-  
+
   function insert() {
     selectedProducts.push({
       product: product,
@@ -67,6 +67,7 @@ export default function OrderRow({ selectedProducts, product }) {
 
         <View style={{ marginLeft: "9%" }}>
           <TextInput
+            keyboardType="numeric"
             style={styles.textInput}
             mode="outlined"
             label=""

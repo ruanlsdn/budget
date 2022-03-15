@@ -1,5 +1,11 @@
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  ScrollView,
+} from "react-native";
 import OrderRow from "./orderRow";
 import { Divider } from "react-native-paper";
 import Icon from "react-native-vector-icons/Feather";
@@ -26,50 +32,118 @@ export default function Order({ navigation }) {
       product: "Coração",
       price: 3.3,
     },
+    {
+      id: 1,
+      product: "Asinha de Frango",
+      price: 4.7,
+    },
+    {
+      id: 2,
+      product: "Contrafilé (120g)",
+      price: 4.2,
+    },
+    {
+      id: 3,
+      product: "Contrafilé (80g)",
+      price: 3.3,
+    },
+    {
+      id: 4,
+      product: "Coração",
+      price: 3.3,
+    },
+    {
+      id: 1,
+      product: "Asinha de Frango",
+      price: 4.7,
+    },
+    {
+      id: 2,
+      product: "Contrafilé (120g)",
+      price: 4.2,
+    },
+    {
+      id: 3,
+      product: "Contrafilé (80g)",
+      price: 3.3,
+    },
+    {
+      id: 4,
+      product: "Coração",
+      price: 3.3,
+    },
+    {
+      id: 1,
+      product: "Asinha de Frango",
+      price: 4.7,
+    },
+    {
+      id: 2,
+      product: "Contrafilé (120g)",
+      price: 4.2,
+    },
+    {
+      id: 3,
+      product: "Contrafilé (80g)",
+      price: 3.3,
+    },
+    {
+      id: 4,
+      product: "Coração",
+      price: 3.3,
+    },
   ];
 
   let selectedProducts = [];
 
   return (
-    <View style={styles.contentContainer}>
-      <View style={styles.tableHeader}>
-        <View
-          style={{
-            width: "20%",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <Text style={styles.tableHeaderText}>Incluir</Text>
+    <>
+      <View style={styles.contentContainer}>
+        <View style={styles.tableHeader}>
+          <View
+            style={{
+              width: "20%",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Text style={styles.tableHeaderText}>Incluir</Text>
+          </View>
+          <View
+            style={{
+              width: "50%",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Text style={styles.tableHeaderText}>Produto</Text>
+          </View>
+          <View
+            style={{
+              width: "30%",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Text style={styles.tableHeaderText}>Quantidade</Text>
+          </View>
         </View>
-        <View
-          style={{
-            width: "50%",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <Text style={styles.tableHeaderText}>Produto</Text>
-        </View>
-        <View
-          style={{
-            width: "30%",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <Text style={styles.tableHeaderText}>Quantidade</Text>
-        </View>
-      </View>
-      <View style={styles.tableRows}>
-        <Divider style={{ height: 3 }} />
-        {products.map((product) => (
-          <>
-            <OrderRow selectedProducts={selectedProducts} product={product} />
+        <ScrollView style={{ flex: 1 }}>
+          <View style={styles.tableRows}>
             <Divider style={{ height: 3 }} />
-          </>
-        ))}
+            {products.map((product) => (
+              <>
+                <OrderRow
+                  selectedProducts={selectedProducts}
+                  product={product}
+                />
+                <Divider style={{ height: 3 }} />
+              </>
+            ))}
+          </View>
+        </ScrollView>
       </View>
+
       <TouchableOpacity
         onPress={() =>
           navigation.navigate("Budget", {
@@ -80,7 +154,7 @@ export default function Order({ navigation }) {
       >
         <Icon color="white" name="shopping-cart" size={25} />
       </TouchableOpacity>
-    </View>
+    </>
   );
 }
 

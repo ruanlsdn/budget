@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { Modal, StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import {
+  Modal,
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  ScrollView,
+} from "react-native";
 import { DataTable, Divider, TextInput } from "react-native-paper";
 import ProductRow from "./productRow";
 
@@ -65,6 +72,7 @@ export default function Products() {
             />
             <TextInput
               mode="outlined"
+              keyboardType="numeric"
               activeOutlineColor="black"
               style={{ borderRadius: 5, height: 50, backgroundColor: "white" }}
               label="Preço"
@@ -91,15 +99,17 @@ export default function Products() {
             <Text style={styles.tableHeaderText}>Ações</Text>
           </View>
         </View>
-        <View style={styles.tableRows}>
-          <Divider style={{ height: 3 }} />
-          {products.map((product) => (
-            <>
-              <ProductRow product={product.product} price={product.price} />
-              <Divider style={{ height: 3 }} />
-            </>
-          ))}
-        </View>
+        <ScrollView style={{ flex: 1 }}>
+          <View style={styles.tableRows}>
+            <Divider style={{ height: 3 }} />
+            {products.map((product) => (
+              <>
+                <ProductRow product={product.product} price={product.price} />
+                <Divider style={{ height: 3 }} />
+              </>
+            ))}
+          </View>
+        </ScrollView>
         <TouchableOpacity
           onPress={() => setModal(!modal)}
           style={styles.button}

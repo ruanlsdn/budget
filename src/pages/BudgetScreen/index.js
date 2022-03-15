@@ -5,6 +5,8 @@ import { Divider } from "react-native-paper";
 
 export default function Budget({ route }) {
   const { products } = route.params;
+  let prices = [];
+  let sum = [];
 
   return (
     <View style={styles.contentContainer}>
@@ -64,13 +66,24 @@ export default function Budget({ route }) {
           </View>
           <Divider style={{ height: 3 }} />
           <View style={styles.tableRows}>
-          <Divider style={{ height: 3 }} />
+            <Divider style={{ height: 3 }} />
             {products.map((item) => (
               <>
-                <BudgetRow item={item} />
+                <BudgetRow prices={prices} item={item} sum={sum} />
                 <Divider style={{ height: 3 }} />
               </>
             ))}
+          </View>
+          <View
+            style={{
+              flexDirection: "row",
+              width: "100%",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Text style={styles.sumText}>Total do Pedido: R$</Text>
+            <Text style={styles.sumText}>{sum}</Text>
           </View>
         </>
       )}
@@ -99,5 +112,9 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "column",
     width: "100%",
+  },
+  sumText: {
+    fontSize: 15,
+    fontWeight: "bold",
   },
 });
