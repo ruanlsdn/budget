@@ -6,10 +6,13 @@ import Budget from "../BudgetScreen";
 
 const OrderStack = createNativeStackNavigator();
 
-export default function OrderStackScreen() {
+export default function OrderStackScreen({ route }) {
+  const { user } = route.params;
+
   return (
     <OrderStack.Navigator>
       <OrderStack.Screen
+        initialParams={{ user: user }}
         name="Order"
         options={{ headerShown: false }}
         component={Order}

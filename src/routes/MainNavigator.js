@@ -6,7 +6,9 @@ import Products from "../pages/ProductsPage";
 
 const Tab = createMaterialTopTabNavigator();
 
-export default function MainNavigator() {
+export default function MainNavigator({ route }) {
+  const { user } = route.params;
+  
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -22,8 +24,16 @@ export default function MainNavigator() {
           },
         }}
       >
-        <Tab.Screen name="Orçamento" component={OrderStackScreen} />
-        <Tab.Screen name="Produtos" component={Products} />
+        <Tab.Screen
+          name="Orçamento"
+          initialParams={{ user: user }}
+          component={OrderStackScreen}
+        />
+        <Tab.Screen
+          name="Produtos"
+          initialParams={{ user: user }}
+          component={Products}
+        />
       </Tab.Navigator>
     </View>
   );

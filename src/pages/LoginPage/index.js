@@ -1,11 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import * as Animatable from "react-native-animatable";
-import { TextInput } from "react-native-paper";
+import { TextInput, Snackbar } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
+import { createUser, findUser } from "../../services/ApiRequest";
 
 export default function Login() {
   const navigation = useNavigation();
+  const [username, setUsername] = useState(null);
+  const [password, setPassword] = useState(null);
+  const [snackBar, setSnackBar] = useState(false);
+  const onDismissSnack = () => setSnackBar(false);
 
   return (
     <View style={styles.container}>
@@ -28,6 +33,7 @@ export default function Login() {
       >
         <Text style={styles.formTitle}>Login</Text>
         <TextInput
+          onChangeText={(text) => setUsername(text)}
           mode="outlined"
           style={{
             borderRadius: 20,
@@ -40,6 +46,7 @@ export default function Login() {
           label="Usuário"
         />
         <TextInput
+          onChangeText={(text) => setPassword(text)}
           mode="outlined"
           style={{
             borderRadius: 20,
@@ -53,12 +60,27 @@ export default function Login() {
           right={<TextInput.Icon name="eye" />}
         />
         <TouchableOpacity
-          onPress={() => navigation.navigate("Main")}
+          onPress={async () => {
+            const response = await (await findUser(username, password)).data;
+            response
+              ? navigation.navigate("Main", {
+                  user: response,
+                })
+              : setSnackBar(true);
+          }}
           style={styles.button}
         >
           <Text style={{ color: "#FFF" }}>Acessar</Text>
         </TouchableOpacity>
       </Animatable.View>
+
+      <Snackbar
+        duration={1000 * 3}
+        onDismiss={onDismissSnack}
+        visible={snackBar}
+      >
+        Usuário não cadastrado ou dados de autenticação incorretos.
+      </Snackbar>
     </View>
   );
 }

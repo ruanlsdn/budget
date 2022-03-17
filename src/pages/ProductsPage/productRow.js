@@ -1,8 +1,9 @@
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Icon from "react-native-vector-icons/AntDesign";
+import { deleteProduct } from "../../services/ApiRequest";
 
-export default function ProductRow(props) {
+export default function ProductRow({ product }) {
   return (
     <>
       <View style={styles.row}>
@@ -13,7 +14,7 @@ export default function ProductRow(props) {
             justifyContent: "center",
           }}
         >
-          <Text style={{ fontSize: 18 }}>{props.product}</Text>
+          <Text style={{ fontSize: 18 }}>{product.description}</Text>
         </View>
         <View
           style={{
@@ -22,7 +23,9 @@ export default function ProductRow(props) {
             justifyContent: "center",
           }}
         >
-          <Text style={{ fontSize: 18 }}>{parseFloat(props.price).toFixed(2)}</Text>
+          <Text style={{ fontSize: 18 }}>
+            {parseFloat(product.price).toFixed(2)}
+          </Text>
         </View>
         <View
           style={{
@@ -34,11 +37,15 @@ export default function ProductRow(props) {
           <View style={{ flexDirection: "row" }}>
             <TouchableOpacity
               style={{ marginRight: 20 }}
-              onPress={() => console.log("update")}
+              onPress={() => console.log(product.id)}
             >
               <Icon name="form" size={25} />
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => console.log("delete")}>
+            <TouchableOpacity
+              onPress={async () => {
+                const response = await (await deleteProduct(product.id)).status;
+              }}
+            >
               <Icon name="delete" size={25} />
             </TouchableOpacity>
           </View>

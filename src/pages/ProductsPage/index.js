@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Modal,
   StyleSheet,
@@ -9,27 +9,26 @@ import {
 } from "react-native";
 import { DataTable, Divider, TextInput } from "react-native-paper";
 import ProductRow from "./productRow";
+import {
+  createProduct,
+  findUser,
+  findByOwner,
+} from "../../services/ApiRequest";
+import { useIsFocused } from "@react-navigation/native";
 
-export default function Products() {
+export default function Products({ route }) {
+  const isFocused = useIsFocused();
+  const { user } = route.params;
+  const [products, setProducts] = useState([]);
   const [modal, setModal] = useState(false);
-  const products = [
-    {
-      product: "Asinha de Frango",
-      price: 4.7,
-    },
-    {
-      product: "Contrafilé (120g)",
-      price: 4.2,
-    },
-    {
-      product: "Contrafilé (80g)",
-      price: 3.3,
-    },
-    {
-      product: "Coração",
-      price: 3.3,
-    },
-  ];
+  const [product, setProduct] = useState(null);
+  const [price, setPrice] = useState(null);
+  const [controller, setController] = useState(null);
+
+  useEffect(async () => {
+    const response = await (await findByOwner(user.id)).data;
+    response.length === 0 ? setProducts([]) : setProducts(response);
+  }, [controller, isFocused]);
 
   return (
     <View style={styles.container}>
@@ -61,6 +60,7 @@ export default function Products() {
               </TouchableOpacity>
             </View>
             <TextInput
+              onChangeText={(text) => setProduct(text)}
               mode="outlined"
               activeOutlineColor="black"
               style={{
@@ -71,6 +71,7 @@ export default function Products() {
               label="Descrição"
             />
             <TextInput
+              onChangeText={(text) => setPrice(text)}
               mode="outlined"
               keyboardType="numeric"
               activeOutlineColor="black"
@@ -79,7 +80,19 @@ export default function Products() {
             />
             <TouchableOpacity
               style={styles.buttonForm}
-              onPress={() => setModal(!modal)}
+              onPress={async () => {
+                const response = await createProduct({
+                  product: product,
+                  price: price,
+                  ownerId: user.id.toString(),
+                });
+
+                if (response.status === 201) {
+                  setController(!controller);
+                }
+
+                setModal(!modal);
+              }}
             >
               <Text style={{ color: "#FFF" }}>Adicionar</Text>
             </TouchableOpacity>
@@ -88,28 +101,35 @@ export default function Products() {
       </Modal>
 
       <View style={styles.contentContainer}>
-        <View style={styles.tableHeader}>
-          <View style={{ width: "50%", alignItems: "center" }}>
-            <Text style={styles.tableHeaderText}>Descrição</Text>
-          </View>
-          <View style={{ width: "25%", alignItems: "center" }}>
-            <Text style={styles.tableHeaderText}>Preço</Text>
-          </View>
-          <View style={{ width: "25%", alignItems: "center" }}>
-            <Text style={styles.tableHeaderText}>Ações</Text>
-          </View>
-        </View>
-        <ScrollView style={{ flex: 1 }}>
-          <View style={styles.tableRows}>
-            <Divider style={{ height: 3 }} />
-            {products.map((product) => (
-              <>
-                <ProductRow product={product.product} price={product.price} />
+        {products.length === 0 ? (
+          <Text style={{ fontSize: 20 }}>Nenhum produto cadastrado.</Text>
+        ) : (
+          <>
+            <View style={styles.tableHeader}>
+              <View style={{ width: "50%", alignItems: "center" }}>
+                <Text style={styles.tableHeaderText}>Descrição</Text>
+              </View>
+              <View style={{ width: "25%", alignItems: "center" }}>
+                <Text style={styles.tableHeaderText}>Preço</Text>
+              </View>
+              <View style={{ width: "25%", alignItems: "center" }}>
+                <Text style={styles.tableHeaderText}>Ações</Text>
+              </View>
+            </View>
+            <ScrollView style={{ flex: 1 }}>
+              <View style={styles.tableRows}>
                 <Divider style={{ height: 3 }} />
-              </>
-            ))}
-          </View>
-        </ScrollView>
+                {products.map((product) => (
+                  <>
+                    <ProductRow product={product} />
+                    <Divider style={{ height: 3 }} />
+                  </>
+                ))}
+              </View>
+            </ScrollView>
+          </>
+        )}
+
         <TouchableOpacity
           onPress={() => setModal(!modal)}
           style={styles.button}
@@ -129,6 +149,8 @@ const styles = StyleSheet.create({
   contentContainer: {
     flex: 1,
     backgroundColor: "#DEDEDE",
+    alignItems: "center",
+    justifyContent: "center",
   },
   tableHeader: { flexDirection: "row", marginTop: 20, height: "5%" },
   tableHeaderText: {
