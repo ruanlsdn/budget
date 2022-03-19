@@ -17,7 +17,7 @@ export default function MainNavigator() {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.textHeader}>Business Management</Text>
+        <Text style={styles.textHeader}>Budget Management</Text>
       </View>
       <Tab.Navigator
         screenOptions={{

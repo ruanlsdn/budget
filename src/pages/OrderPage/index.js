@@ -90,7 +90,6 @@ const styles = StyleSheet.create({
   },
   tableHeader: {
     flexDirection: "row",
-    marginTop: 20,
     marginBottom: 10,
   },
   tableHeaderText: {

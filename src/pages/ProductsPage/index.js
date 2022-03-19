@@ -210,7 +210,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  tableHeader: { flexDirection: "row", marginTop: 20, height: "5%" },
+  tableHeader: { flexDirection: "row", height: "5%" },
   tableHeaderText: {
     fontSize: 20,
     fontWeight: "bold",
