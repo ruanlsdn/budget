@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Icon from "react-native-vector-icons/AntDesign";
-import { deleteProduct } from "../../services/ApiRequest";
+import { ProductsContext } from "../../contexts/products";
 
 export default function ProductRow({ product }) {
+  const { remove } = useContext(ProductsContext);
   return (
     <>
       <View style={styles.row}>
@@ -42,8 +43,8 @@ export default function ProductRow({ product }) {
               <Icon name="form" size={25} />
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={async () => {
-                const response = await (await deleteProduct(product.id)).status;
+              onPress={() => {
+                remove(product.id);
               }}
             >
               <Icon name="delete" size={25} />

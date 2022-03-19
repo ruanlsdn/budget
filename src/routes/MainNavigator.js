@@ -1,14 +1,19 @@
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { StyleSheet, Text, View } from "react-native";
+import { ProductsContext } from "../contexts/products";
 import OrderStackScreen from "../pages/OrderPage/orderStackScreen";
 import Products from "../pages/ProductsPage";
 
 const Tab = createMaterialTopTabNavigator();
 
-export default function MainNavigator({ route }) {
-  const { user } = route.params;
-  
+export default function MainNavigator() {
+  const { find } = useContext(ProductsContext);
+
+  useEffect(() => {
+    find();
+  }, []);
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -24,16 +29,8 @@ export default function MainNavigator({ route }) {
           },
         }}
       >
-        <Tab.Screen
-          name="Orçamento"
-          initialParams={{ user: user }}
-          component={OrderStackScreen}
-        />
-        <Tab.Screen
-          name="Produtos"
-          initialParams={{ user: user }}
-          component={Products}
-        />
+        <Tab.Screen name="Orçamento" component={OrderStackScreen} />
+        <Tab.Screen name="Produtos" component={Products} />
       </Tab.Navigator>
     </View>
   );

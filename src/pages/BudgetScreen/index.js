@@ -1,16 +1,17 @@
-import React from "react";
+import React, { useContext } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import BudgetRow from "./budgetRow";
 import { Divider } from "react-native-paper";
+import { SelectedProductsContext } from "../../contexts/selectedProducts";
 
-export default function Budget({ route }) {
-  const { products } = route.params;
+export default function Budget() {
   let prices = [];
   let sum = [];
+  const { selectedProducts } = useContext(SelectedProductsContext);
 
   return (
     <View style={styles.contentContainer}>
-      {products.length === 0 ? (
+      {selectedProducts.length === 0 ? (
         <Text style={{ fontSize: 20 }}>
           Nenhum produto adicionado ao carrinho.
         </Text>
@@ -67,7 +68,7 @@ export default function Budget({ route }) {
           <Divider style={{ height: 3 }} />
           <View style={styles.tableRows}>
             <Divider style={{ height: 3 }} />
-            {products.map((item) => (
+            {selectedProducts.map((item) => (
               <>
                 <BudgetRow prices={prices} item={item} sum={sum} />
                 <Divider style={{ height: 3 }} />
@@ -114,7 +115,7 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   sumText: {
-    fontSize: 15,
+    fontSize: 20,
     fontWeight: "bold",
   },
 });

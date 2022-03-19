@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import {
   Modal,
   StyleSheet,
@@ -15,21 +15,15 @@ import {
   findByOwner,
 } from "../../services/ApiRequest";
 import { useIsFocused } from "@react-navigation/native";
+import { ProductsContext } from "../../contexts/products";
+import { AuthContext } from "../../contexts/auth";
 
-export default function Products({ route }) {
-  const isFocused = useIsFocused();
-  const { user } = route.params;
-  const [products, setProducts] = useState([]);
-  const [modal, setModal] = useState(false);
+export default function Products() {
   const [product, setProduct] = useState(null);
   const [price, setPrice] = useState(null);
-  const [controller, setController] = useState(null);
-
-  useEffect(async () => {
-    const response = await (await findByOwner(user.id)).data;
-    response.length === 0 ? setProducts([]) : setProducts(response);
-  }, [controller, isFocused]);
-
+  const { create, products, modal, setModal } = useContext(ProductsContext);
+  const { user } = useContext(AuthContext);
+  
   return (
     <View style={styles.container}>
       <Modal animationType="slide" transparent={true} visible={modal}>
@@ -80,19 +74,13 @@ export default function Products({ route }) {
             />
             <TouchableOpacity
               style={styles.buttonForm}
-              onPress={async () => {
-                const response = await createProduct({
+              onPress={() =>
+                create({
                   product: product,
                   price: price,
-                  ownerId: user.id.toString(),
-                });
-
-                if (response.status === 201) {
-                  setController(!controller);
-                }
-
-                setModal(!modal);
-              }}
+                  ownerId: user.id,
+                })
+              }
             >
               <Text style={{ color: "#FFF" }}>Adicionar</Text>
             </TouchableOpacity>

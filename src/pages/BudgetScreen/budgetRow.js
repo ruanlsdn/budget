@@ -26,7 +26,7 @@ export default function BudgetRow({ item, prices, sum }) {
           justifyContent: "center",
         }}
       >
-        <Text>{item.product.product}</Text>
+        <Text>{item.product.description}</Text>
       </View>
       <View
         style={{

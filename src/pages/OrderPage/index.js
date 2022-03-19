@@ -1,100 +1,20 @@
-import React from "react";
+import { useNavigation } from "@react-navigation/native";
+import React, { useContext } from "react";
 import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
   ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View
 } from "react-native";
-import OrderRow from "./orderRow";
 import { Divider } from "react-native-paper";
 import Icon from "react-native-vector-icons/Feather";
+import { ProductsContext } from "../../contexts/products";
+import OrderRow from "./orderRow";
 
-export default function Order({ navigation }) {
-  const products = [
-    {
-      id: 1,
-      product: "Asinha de Frango",
-      price: 4.7,
-    },
-    {
-      id: 2,
-      product: "Contrafilé (120g)",
-      price: 4.2,
-    },
-    {
-      id: 3,
-      product: "Contrafilé (80g)",
-      price: 3.3,
-    },
-    {
-      id: 4,
-      product: "Coração",
-      price: 3.3,
-    },
-    {
-      id: 1,
-      product: "Asinha de Frango",
-      price: 4.7,
-    },
-    {
-      id: 2,
-      product: "Contrafilé (120g)",
-      price: 4.2,
-    },
-    {
-      id: 3,
-      product: "Contrafilé (80g)",
-      price: 3.3,
-    },
-    {
-      id: 4,
-      product: "Coração",
-      price: 3.3,
-    },
-    {
-      id: 1,
-      product: "Asinha de Frango",
-      price: 4.7,
-    },
-    {
-      id: 2,
-      product: "Contrafilé (120g)",
-      price: 4.2,
-    },
-    {
-      id: 3,
-      product: "Contrafilé (80g)",
-      price: 3.3,
-    },
-    {
-      id: 4,
-      product: "Coração",
-      price: 3.3,
-    },
-    {
-      id: 1,
-      product: "Asinha de Frango",
-      price: 4.7,
-    },
-    {
-      id: 2,
-      product: "Contrafilé (120g)",
-      price: 4.2,
-    },
-    {
-      id: 3,
-      product: "Contrafilé (80g)",
-      price: 3.3,
-    },
-    {
-      id: 4,
-      product: "Coração",
-      price: 3.3,
-    },
-  ];
-
-  let selectedProducts = [];
+export default function Order() {
+  const navigation = useNavigation();
+  const { products } = useContext(ProductsContext);
 
   return (
     <>
@@ -131,12 +51,9 @@ export default function Order({ navigation }) {
         <ScrollView style={{ flex: 1 }}>
           <View style={styles.tableRows}>
             <Divider style={{ height: 3 }} />
-            {products.map((product) => (
+            {products?.map((product, i) => (
               <>
-                <OrderRow
-                  selectedProducts={selectedProducts}
-                  product={product}
-                />
+                <OrderRow product={product} />
                 <Divider style={{ height: 3 }} />
               </>
             ))}
@@ -145,11 +62,7 @@ export default function Order({ navigation }) {
       </View>
 
       <TouchableOpacity
-        onPress={() =>
-          navigation.navigate("Budget", {
-            products: selectedProducts,
-          })
-        }
+        onPress={() => navigation.navigate("Budget")}
         style={styles.button}
       >
         <Icon color="white" name="shopping-cart" size={25} />

@@ -1,20 +1,28 @@
-import React, { useState } from "react";
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import React, { useState, useContext } from "react";
+import {
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  KeyboardAvoidingView,
+} from "react-native";
 import * as Animatable from "react-native-animatable";
 import { TextInput, Snackbar } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 import { createUser, findUser } from "../../services/ApiRequest";
+import { AuthContext } from "../../contexts/auth";
 
 export default function Login() {
+  const { signIn, snackBar, setSnackBar } = useContext(AuthContext);
   const navigation = useNavigation();
   const [username, setUsername] = useState(null);
   const [password, setPassword] = useState(null);
-  const [snackBar, setSnackBar] = useState(false);
   const onDismissSnack = () => setSnackBar(false);
 
   return (
     <View style={styles.container}>
-      <Animatable.View animation="flipInY" style={styles.containerLogo}>
+      <View animation="flipInY" style={styles.containerLogo}>
         <Image
           style={{ width: "100%", height: 150 }}
           source={require("../../assets/logo.png")}
@@ -24,13 +32,9 @@ export default function Login() {
         <Text style={styles.descriptionLogo}>
           A organização do seu negócio em suas mãos!
         </Text>
-      </Animatable.View>
+      </View>
 
-      <Animatable.View
-        delay={1000}
-        animation="fadeInUp"
-        style={styles.containerForm}
-      >
+      <View delay={1000} animation="fadeInUp" style={styles.containerForm}>
         <Text style={styles.formTitle}>Login</Text>
         <TextInput
           onChangeText={(text) => setUsername(text)}
@@ -59,20 +63,10 @@ export default function Login() {
           activeOutlineColor="black"
           right={<TextInput.Icon name="eye" />}
         />
-        <TouchableOpacity
-          onPress={async () => {
-            const response = await (await findUser(username, password)).data;
-            response
-              ? navigation.navigate("Main", {
-                  user: response,
-                })
-              : setSnackBar(true);
-          }}
-          style={styles.button}
-        >
+        <TouchableOpacity onPress={async() => await signIn(username, password)} style={styles.button}>
           <Text style={{ color: "#FFF" }}>Acessar</Text>
         </TouchableOpacity>
-      </Animatable.View>
+      </View>
 
       <Snackbar
         duration={1000 * 3}

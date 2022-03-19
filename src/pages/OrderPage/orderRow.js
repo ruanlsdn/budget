@@ -1,39 +1,15 @@
-import React, { useState } from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { TextInput, Checkbox } from "react-native-paper";
-import Icon from "react-native-vector-icons/AntDesign";
+import React, { useContext, useState } from "react";
+import { StyleSheet, Text, View } from "react-native";
+import { Checkbox, TextInput } from "react-native-paper";
+import { SelectedProductsContext } from "../../contexts/selectedProducts";
 
 export default function OrderRow({ selectedProducts, product }) {
+  const { insert, remove, update } = useContext(SelectedProductsContext);
   const [checked, setChecked] = useState(false);
   const [disabled, setDisabled] = useState(true);
   const [amount, setAmount] = useState(0);
 
-  function insert() {
-    selectedProducts.push({
-      product: product,
-      amount: amount,
-    });
-  }
-
-  function find() {
-    for (let i = 0; i < selectedProducts.length; i++) {
-      if (selectedProducts[i].product === product) {
-        return i;
-      }
-    }
-  }
-
-  function update() {
-    selectedProducts[find()].amount = amount;
-  }
-
-  function remove() {
-    selectedProducts.splice(find(), 1);
-  }
-
-  if (checked) {
-    update();
-  }
+  // if (!checked) update(amount, product);
 
   return (
     <>
@@ -50,7 +26,7 @@ export default function OrderRow({ selectedProducts, product }) {
             status={checked ? "checked" : "unchecked"}
             onPress={() => {
               setChecked(!checked);
-              !checked ? insert() : remove();
+              !checked ? insert(amount, product) : remove(product);
             }}
           />
         </View>
@@ -62,7 +38,7 @@ export default function OrderRow({ selectedProducts, product }) {
             justifyContent: "center",
           }}
         >
-          <Text style={{ fontSize: 18 }}>{product.product}</Text>
+          <Text style={{ fontSize: 18 }}>{product.description}</Text>
         </View>
 
         <View style={{ marginLeft: "9%" }}>
@@ -77,9 +53,9 @@ export default function OrderRow({ selectedProducts, product }) {
               if (text != "" && text != "0") {
                 setDisabled(false);
               } else {
+                remove(product);
                 setChecked(false);
                 setDisabled(true);
-                remove();
               }
             }}
           />
