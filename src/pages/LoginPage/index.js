@@ -12,6 +12,7 @@ import { TextInput, Snackbar } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 import { createUser, findUser } from "../../services/ApiRequest";
 import { AuthContext } from "../../contexts/auth";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 export default function Login() {
   const { signIn, snackBar, setSnackBar } = useContext(AuthContext);
@@ -22,9 +23,9 @@ export default function Login() {
 
   return (
     <View style={styles.container}>
-      <View animation="flipInY" style={styles.containerLogo}>
+      <Animatable.View animation="fadeInDown" style={styles.containerLogo}>
         <Image
-          style={{ width: "100%", height: 150 }}
+          style={{ width: "100%", height: 150, tintColor: "white" }}
           source={require("../../assets/logo.png")}
           resizeMode="contain"
         />
@@ -32,41 +33,46 @@ export default function Login() {
         <Text style={styles.descriptionLogo}>
           A organização do seu negócio em suas mãos!
         </Text>
-      </View>
+      </Animatable.View>
 
-      <View delay={1000} animation="fadeInUp" style={styles.containerForm}>
-        <Text style={styles.formTitle}>Login</Text>
-        <TextInput
-          onChangeText={(text) => setUsername(text)}
-          mode="outlined"
-          style={{
-            borderRadius: 20,
-            marginLeft: 20,
-            marginRight: 20,
-            marginBottom: 5,
-            backgroundColor: "#DEDEDE",
-          }}
-          activeOutlineColor="black"
-          label="Usuário"
-        />
-        <TextInput
-          onChangeText={(text) => setPassword(text)}
-          mode="outlined"
-          style={{
-            borderRadius: 20,
-            marginLeft: 20,
-            marginRight: 20,
-            backgroundColor: "#DEDEDE",
-          }}
-          label="Senha"
-          secureTextEntry
-          activeOutlineColor="black"
-          right={<TextInput.Icon name="eye" />}
-        />
-        <TouchableOpacity onPress={async() => await signIn(username, password)} style={styles.button}>
-          <Text style={{ color: "#FFF" }}>Acessar</Text>
-        </TouchableOpacity>
-      </View>
+      <Animatable.View animation="fadeInUp" style={styles.containerForm}>
+        <KeyboardAvoidingView behavior="height">
+          <Text style={styles.formTitle}>Login</Text>
+          <TextInput
+            onChangeText={(text) => setUsername(text)}
+            mode="outlined"
+            style={{
+              borderRadius: 20,
+              marginLeft: 20,
+              marginRight: 20,
+              marginBottom: 5,
+              backgroundColor: "#DEDEDE",
+            }}
+            activeOutlineColor="black"
+            label="Usuário"
+          />
+          <TextInput
+            onChangeText={(text) => setPassword(text)}
+            mode="outlined"
+            style={{
+              borderRadius: 20,
+              marginLeft: 20,
+              marginRight: 20,
+              backgroundColor: "#DEDEDE",
+            }}
+            label="Senha"
+            secureTextEntry
+            activeOutlineColor="black"
+            right={<TextInput.Icon name="eye" />}
+          />
+          <TouchableOpacity
+            onPress={() => signIn(username, password)}
+            style={styles.button}
+          >
+            <Text style={{ color: "#FFF" }}>Acessar</Text>
+          </TouchableOpacity>
+        </KeyboardAvoidingView>
+      </Animatable.View>
 
       <Snackbar
         duration={1000 * 2}
@@ -114,7 +120,7 @@ const styles = StyleSheet.create({
     marginBottom: 25,
   },
   containerForm: {
-    flex: 1,
+    flex: 2,
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
     backgroundColor: "#DEDEDE",
@@ -123,7 +129,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#253743",
     borderRadius: 20,
     alignSelf: "center",
-    width: 350,
+    width: 380,
     height: 50,
     marginTop: 40,
     alignItems: "center",
