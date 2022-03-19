@@ -1,12 +1,12 @@
 {
   "expo": {
-    "name": "notes_generator",
-    "slug": "notes_generator",
+    "name": "Budget",
+    "slug": "Budget",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/logo.png",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/logo.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -20,6 +20,7 @@
       "supportsTablet": true
     },
     "android": {
+      "package": "notesgenerator.app",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"

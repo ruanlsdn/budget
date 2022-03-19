@@ -101,7 +101,6 @@ const styles = StyleSheet.create({
   },
   tableHeader: {
     flexDirection: "row",
-    marginTop: 20,
     height: "5%",
   },
   tableHeaderText: {
@@ -115,7 +114,7 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   sumText: {
-    fontSize: 20,
+    fontSize: 15,
     fontWeight: "bold",
   },
 });
