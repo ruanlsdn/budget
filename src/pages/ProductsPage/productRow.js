@@ -4,7 +4,7 @@ import Icon from "react-native-vector-icons/AntDesign";
 import { ProductsContext } from "../../contexts/products";
 
 export default function ProductRow({ product }) {
-  const { remove } = useContext(ProductsContext);
+  const {findById, remove } = useContext(ProductsContext);
   return (
     <>
       <View style={styles.row}>
@@ -38,7 +38,7 @@ export default function ProductRow({ product }) {
           <View style={{ flexDirection: "row" }}>
             <TouchableOpacity
               style={{ marginRight: 20 }}
-              onPress={() => console.log(product.id)}
+              onPress={() => findById(product.id)}
             >
               <Icon name="form" size={25} />
             </TouchableOpacity>

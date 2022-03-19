@@ -13,9 +13,23 @@ import { ProductsContext } from "../../contexts/products";
 import ProductRow from "./productRow";
 
 export default function Products() {
-  const [product, setProduct] = useState(null);
+  const [description, setDescription] = useState(null);
   const [price, setPrice] = useState(null);
-  const { create, products, modal, setModal } = useContext(ProductsContext);
+  const {
+    create,
+    update,
+    product,
+    products,
+    modal,
+    setModal,
+    modalUpdate,
+    setModalUpdate,
+    newId,
+    newPrice,
+    setNewPrice,
+    newDescription,
+    setNewDescription,
+  } = useContext(ProductsContext);
   const { user } = useContext(AuthContext);
 
   return (
@@ -48,7 +62,7 @@ export default function Products() {
               </TouchableOpacity>
             </View>
             <TextInput
-              onChangeText={(text) => setProduct(text)}
+              onChangeText={(text) => setDescription(text)}
               mode="outlined"
               activeOutlineColor="black"
               style={{
@@ -70,11 +84,73 @@ export default function Products() {
               style={styles.buttonForm}
               onPress={() =>
                 create({
-                  product: product,
+                  product: description,
                   price: price,
                   ownerId: user.id,
                 })
               }
+            >
+              <Text style={{ color: "#FFF" }}>Adicionar</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
+      <Modal animationType="slide" transparent={true} visible={modalUpdate}>
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <View style={styles.modalHeader}>
+              <Text
+                style={{
+                  fontSize: 20,
+                  fontWeight: "bold",
+                }}
+              >
+                Atualizar Produto
+              </Text>
+              <TouchableOpacity
+                style={{ alignItems: "center" }}
+                onPress={() => setModalUpdate(!modalUpdate)}
+              >
+                <Text
+                  style={{
+                    fontSize: 20,
+                    fontWeight: "bold",
+                    marginLeft: "55%",
+                  }}
+                >
+                  X
+                </Text>
+              </TouchableOpacity>
+            </View>
+            <TextInput
+              onChangeText={(text) => setNewDescription(text)}
+              mode="outlined"
+              activeOutlineColor="black"
+              style={{
+                borderRadius: 5,
+                height: 50,
+                backgroundColor: "white",
+              }}
+              value={newDescription}
+              label="Descrição"
+            />
+            <TextInput
+              onChangeText={(text) => setNewPrice(text)}
+              mode="outlined"
+              keyboardType="numeric"
+              activeOutlineColor="black"
+              style={{ borderRadius: 5, height: 50, backgroundColor: "white" }}
+              label="Preço"
+              value={String(newPrice)}
+            />
+            <TouchableOpacity
+              style={styles.buttonForm}
+              onPress={() => {
+                update(newId, {
+                  product: newDescription,
+                  price: newPrice,
+                });
+              }}
             >
               <Text style={{ color: "#FFF" }}>Adicionar</Text>
             </TouchableOpacity>

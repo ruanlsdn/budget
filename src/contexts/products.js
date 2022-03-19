@@ -16,6 +16,10 @@ function ProductsProvider({ children }) {
   const [products, setProducts] = useState([]);
   const [controller, setController] = useState(false);
   const [modal, setModal] = useState(false);
+  const [modalUpdate, setModalUpdate] = useState(false);
+  const [newId, setNewId] = useState(null);
+  const [newDescription, setNewDescription] = useState(null);
+  const [newPrice, setNewPrice] = useState(null);
 
   useEffect(() => {
     find();
@@ -27,8 +31,10 @@ function ProductsProvider({ children }) {
     setModal(false);
   }
 
-  function updateProduct(description, price) {
-    console.log("uppdate");
+  async function update(id, body) {
+    const response = await (await updateProduct(id, body)).status;
+    response === 201 ? setController(!controller) : null;
+    setModalUpdate(false);
   }
 
   async function find() {
@@ -38,6 +44,12 @@ function ProductsProvider({ children }) {
 
   async function findById(id) {
     const response = await (await findProductById(id)).data;
+    if (response) {
+      setNewId(response.id);
+      setNewDescription(response.description);
+      setNewPrice(response.price);
+      setModalUpdate(true);
+    }
   }
 
   async function remove(id) {
@@ -53,9 +65,18 @@ function ProductsProvider({ children }) {
         products: products,
         create,
         find,
+        update,
+        findById,
         remove,
         modal,
         setModal,
+        modalUpdate,
+        setModalUpdate,
+        newId,
+        newPrice,
+        setNewPrice,
+        newDescription,
+        setNewDescription,
       }}
     >
       {children}

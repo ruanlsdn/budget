@@ -5,8 +5,6 @@ export const SelectedProductsContext = createContext({});
 function SelectedProductsProvider({ children }) {
   const products = [];
 
-  console.log(1);
-
   function insert(amount, product) {
     products.push({
       product: product,

@@ -69,7 +69,7 @@ export default function Login() {
       </View>
 
       <Snackbar
-        duration={1000 * 3}
+        duration={1000 * 2}
         onDismiss={onDismissSnack}
         visible={snackBar}
       >
