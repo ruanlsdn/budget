@@ -1,29 +1,23 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useContext, useState } from "react";
 import {
   Modal,
+  ScrollView,
   StyleSheet,
   Text,
-  View,
   TouchableOpacity,
-  ScrollView,
+  View,
 } from "react-native";
-import { DataTable, Divider, TextInput } from "react-native-paper";
-import ProductRow from "./productRow";
-import {
-  createProduct,
-  findUser,
-  findByOwner,
-} from "../../services/ApiRequest";
-import { useIsFocused } from "@react-navigation/native";
-import { ProductsContext } from "../../contexts/products";
+import { Divider, TextInput } from "react-native-paper";
 import { AuthContext } from "../../contexts/auth";
+import { ProductsContext } from "../../contexts/products";
+import ProductRow from "./productRow";
 
 export default function Products() {
   const [product, setProduct] = useState(null);
   const [price, setPrice] = useState(null);
   const { create, products, modal, setModal } = useContext(ProductsContext);
   const { user } = useContext(AuthContext);
-  
+
   return (
     <View style={styles.container}>
       <Modal animationType="slide" transparent={true} visible={modal}>

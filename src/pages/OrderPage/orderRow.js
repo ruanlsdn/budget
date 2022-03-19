@@ -1,15 +1,23 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { Checkbox, TextInput } from "react-native-paper";
 import { SelectedProductsContext } from "../../contexts/selectedProducts";
 
-export default function OrderRow({ selectedProducts, product }) {
-  const { insert, remove, update } = useContext(SelectedProductsContext);
+export default function OrderRow({ product }) {
+  const { insert, remove, update, selectedProducts } = useContext(
+    SelectedProductsContext
+  );
   const [checked, setChecked] = useState(false);
   const [disabled, setDisabled] = useState(true);
   const [amount, setAmount] = useState(0);
 
-  // if (!checked) update(amount, product);
+  if (checked) {
+    for (let i = 0; i < selectedProducts.length; i++) {
+      if (selectedProducts[i].product === product) {
+        selectedProducts[i].amount = amount;
+      }
+    }
+  }
 
   return (
     <>

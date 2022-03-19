@@ -18,48 +18,54 @@ export default function Order() {
 
   return (
     <>
-      <View style={styles.contentContainer}>
-        <View style={styles.tableHeader}>
-          <View
-            style={{
-              width: "20%",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <Text style={styles.tableHeaderText}>Incluir</Text>
-          </View>
-          <View
-            style={{
-              width: "50%",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <Text style={styles.tableHeaderText}>Produto</Text>
-          </View>
-          <View
-            style={{
-              width: "30%",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <Text style={styles.tableHeaderText}>Quantidade</Text>
-          </View>
+      {products.length === 0 ? (
+        <View style={styles.container}>
+          <Text style={{ fontSize: 20 }}>Nenhum produto cadastrado.</Text>
         </View>
-        <ScrollView style={{ flex: 1 }}>
-          <View style={styles.tableRows}>
-            <Divider style={{ height: 3 }} />
-            {products?.map((product, i) => (
-              <>
-                <OrderRow product={product} />
-                <Divider style={{ height: 3 }} />
-              </>
-            ))}
+      ) : (
+        <View style={styles.contentContainer}>
+          <View style={styles.tableHeader}>
+            <View
+              style={{
+                width: "20%",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Text style={styles.tableHeaderText}>Incluir</Text>
+            </View>
+            <View
+              style={{
+                width: "50%",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Text style={styles.tableHeaderText}>Produto</Text>
+            </View>
+            <View
+              style={{
+                width: "30%",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Text style={styles.tableHeaderText}>Quantidade</Text>
+            </View>
           </View>
-        </ScrollView>
-      </View>
+          <ScrollView style={{ flex: 1 }}>
+            <View style={styles.tableRows}>
+              <Divider style={{ height: 3 }} />
+              {products?.map((product, i) => (
+                <>
+                  <OrderRow product={product} />
+                  <Divider style={{ height: 3 }} />
+                </>
+              ))}
+            </View>
+          </ScrollView>
+        </View>
+      )}
 
       <TouchableOpacity
         onPress={() => navigation.navigate("Budget")}
@@ -72,6 +78,12 @@ export default function Order() {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    alignItems: "center",
+    justifyContent: "center",
+    flex: 1,
+    backgroundColor: "#DEDEDE",
+  },
   contentContainer: {
     flex: 1,
     backgroundColor: "#DEDEDE",

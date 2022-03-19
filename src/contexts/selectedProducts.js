@@ -5,12 +5,13 @@ export const SelectedProductsContext = createContext({});
 function SelectedProductsProvider({ children }) {
   const products = [];
 
+  console.log(1);
+
   function insert(amount, product) {
     products.push({
       product: product,
       amount: amount,
     });
-    console.log(products)
   }
 
   function find(product) {
@@ -22,13 +23,10 @@ function SelectedProductsProvider({ children }) {
   }
 
   function update(amount, product) {
-    products[find(product)].amount = amount;
-    console.log(products)
   }
 
   function remove(product) {
     products.splice(find(product), 1);
-    console.log(products)
   }
 
   return (
