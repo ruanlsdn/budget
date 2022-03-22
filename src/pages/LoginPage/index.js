@@ -8,17 +8,17 @@ import {
   KeyboardAvoidingView,
 } from "react-native";
 import * as Animatable from "react-native-animatable";
-import { TextInput, Snackbar } from "react-native-paper";
+import { TextInput, Snackbar, ActivityIndicator, Colors } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 import { createUser, findUser } from "../../services/ApiRequest";
 import { AuthContext } from "../../contexts/auth";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 export default function Login() {
-  const { signIn, snackBar, setSnackBar } = useContext(AuthContext);
-  const navigation = useNavigation();
+  const { signIn, snackBar, setSnackBar, animating, setAnimating} = useContext(AuthContext);
   const [username, setUsername] = useState(null);
   const [password, setPassword] = useState(null);
+  const [security, setSecurity] = useState(true);
   const onDismissSnack = () => setSnackBar(false);
 
   return (
@@ -61,16 +61,20 @@ export default function Login() {
               backgroundColor: "#DEDEDE",
             }}
             label="Senha"
-            secureTextEntry
+            secureTextEntry={security}
             activeOutlineColor="black"
-            right={<TextInput.Icon name="eye" />}
+            right={<TextInput.Icon name="eye" onPress={() => setSecurity(!security)} />}
           />
           <TouchableOpacity
-            onPress={() => signIn(username, password)}
+            onPress={() => {
+              setAnimating(true)
+              signIn(username, password)
+            }}
             style={styles.button}
           >
             <Text style={{ color: "#FFF" }}>Acessar</Text>
           </TouchableOpacity>
+          <ActivityIndicator style={{marginTop: 50}} size="large" animating={animating} color={Colors.black} />
         </KeyboardAvoidingView>
       </Animatable.View>
 
