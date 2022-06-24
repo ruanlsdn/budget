@@ -2,12 +2,12 @@ import { createMaterialTopTabNavigator } from "@react-navigation/material-top-ta
 import React, { useContext, useEffect } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { ProductsContext } from "../contexts/products";
-import OrderStackScreen from "../pages/OrderPage/orderStackScreen";
+import Order from "../pages/OrderPage";
 import Products from "../pages/ProductsPage";
 
 const Tab = createMaterialTopTabNavigator();
 
-export default function MainNavigator() {
+export default function MainTabNavigator() {
   const { find } = useContext(ProductsContext);
 
   useEffect(() => {
@@ -17,7 +17,7 @@ export default function MainNavigator() {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.textHeader}>Budget Management</Text>
+        <Text style={styles.textHeader}>Budget</Text>
       </View>
       <Tab.Navigator
         screenOptions={{
@@ -29,7 +29,7 @@ export default function MainNavigator() {
           },
         }}
       >
-        <Tab.Screen name="Orçamento" component={OrderStackScreen} />
+        <Tab.Screen name="Pedido" component={Order} />
         <Tab.Screen name="Produtos" component={Products} />
       </Tab.Navigator>
     </View>

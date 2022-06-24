@@ -29,7 +29,7 @@ export default function Login() {
           source={require("../../assets/logo.png")}
           resizeMode="contain"
         />
-        <Text style={styles.titleLogo}>Budget Management</Text>
+        <Text style={styles.titleLogo}>Budget</Text>
         <Text style={styles.descriptionLogo}>
           A organização do seu negócio em suas mãos!
         </Text>
