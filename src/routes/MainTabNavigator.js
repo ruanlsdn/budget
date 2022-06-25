@@ -1,18 +1,48 @@
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import React, { useContext, useEffect } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, Alert } from "react-native";
 import { ProductsContext } from "../contexts/products";
 import Order from "../pages/OrderPage";
 import Products from "../pages/ProductsPage";
+import { useNavigation } from "@react-navigation/native";
+import { SelectedProductsContext } from "../contexts/selectedProducts";
 
 const Tab = createMaterialTopTabNavigator();
 
 export default function MainTabNavigator() {
   const { find } = useContext(ProductsContext);
+  const { reset } = useContext(SelectedProductsContext);
+  const navigation = useNavigation();
 
   useEffect(() => {
     find();
   }, []);
+
+  useEffect(
+    () =>
+      navigation.addListener("beforeRemove", (e) => {
+        const action = e.data.action;
+
+        e.preventDefault();
+
+        Alert.alert(
+          "Deseja sair de sua conta?",
+          "Você será redirecionado para a tela de login.",
+          [
+            { text: "Não", style: "cancel", onPress: () => {} },
+            {
+              text: "Sair",
+              style: "destructive",
+              onPress: () => {
+                navigation.dispatch(action);
+                reset();
+              },
+            },
+          ]
+        );
+      }),
+    [navigation]
+  );
 
   return (
     <View style={styles.container}>

@@ -29,7 +29,6 @@ function SelectedProductsProvider({ children }) {
 
   function reset() {
     products.splice(0, products.length);
-    setResetFlag(1);
   }
 
   return (

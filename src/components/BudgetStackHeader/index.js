@@ -5,14 +5,15 @@ import Icon from "react-native-vector-icons/Feather";
 import { SelectedProductsContext } from "../../contexts/selectedProducts";
 
 export default function headerRight() {
-  const { reset } = useContext(SelectedProductsContext);
+  const { reset, setResetFlag } = useContext(SelectedProductsContext);
   const navigation = useNavigation();
 
   return (
     <TouchableOpacity
       onPress={() => {
         reset();
-        navigation.goBack()
+        setResetFlag(1);
+        navigation.goBack();
       }}
     >
       <Icon color="white" name="refresh-cw" size={20} />
