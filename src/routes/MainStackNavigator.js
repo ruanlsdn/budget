@@ -1,4 +1,5 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import headerRight from "../components/BudgetStackHeader";
 import Budget from "../pages/BudgetScreen";
 
 import Login from "../pages/LoginPage";
@@ -28,6 +29,7 @@ export default function MainStackNavigator() {
           headerShown: true,
           headerTintColor: "white",
           headerTitleStyle:{ fontSize: 18},
+          headerRight: headerRight,
           headerStyle: {
             backgroundColor: "#253743",
           },
