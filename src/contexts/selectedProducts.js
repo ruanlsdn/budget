@@ -11,6 +11,7 @@ function SelectedProductsProvider({ children }) {
       product: product,
       amount: amount,
     });
+    products.sort((a, b) => b.amount - a.amount);
   }
 
   function find(product) {
@@ -40,7 +41,7 @@ function SelectedProductsProvider({ children }) {
         remove,
         resetFlag: resetFlag,
         reset,
-        setResetFlag
+        setResetFlag,
       }}
     >
       {children}
