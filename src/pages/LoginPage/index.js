@@ -1,18 +1,13 @@
-import React, { useState, useContext } from "react";
+import { useContext, useState } from "react";
 import {
-  Image,
-  StyleSheet,
+  Image, KeyboardAvoidingView, StyleSheet,
   Text,
   TouchableOpacity,
-  View,
-  KeyboardAvoidingView,
+  View
 } from "react-native";
 import * as Animatable from "react-native-animatable";
-import { TextInput, Snackbar, ActivityIndicator, Colors } from "react-native-paper";
-import { useNavigation } from "@react-navigation/native";
-import { createUser, findUser } from "../../services/ApiRequest";
+import { ActivityIndicator, Colors, Snackbar, TextInput } from "react-native-paper";
 import { AuthContext } from "../../contexts/auth";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 export default function Login() {
   const { signIn, snackBar, setSnackBar, animating, setAnimating} = useContext(AuthContext);
