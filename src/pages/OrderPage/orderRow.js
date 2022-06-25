@@ -1,15 +1,25 @@
 import React, { useContext, useState, useEffect } from "react";
+import { useNavigation, useIsFocused } from "@react-navigation/native";
 import { StyleSheet, Text, View } from "react-native";
 import { Checkbox, TextInput } from "react-native-paper";
 import { SelectedProductsContext } from "../../contexts/selectedProducts";
 
-export default function OrderRow({ product }) {
-  const { insert, remove, update, selectedProducts } = useContext(
-    SelectedProductsContext
-  );
+export default function OrderRow({ product, index }) {
+  const { insert, remove, update, selectedProducts, resetFlag, setResetFlag } =
+    useContext(SelectedProductsContext);
   const [checked, setChecked] = useState(false);
   const [disabled, setDisabled] = useState(true);
   const [amount, setAmount] = useState(0);
+  const isFocused = useIsFocused();
+
+  useEffect(() => {
+    if (isFocused && resetFlag == 1) {
+      setChecked(false);
+      setDisabled(true);
+      setAmount(0);
+      setResetFlag(0);
+    }
+  }, [isFocused]);
 
   if (checked) {
     for (let i = 0; i < selectedProducts.length; i++) {
@@ -51,6 +61,7 @@ export default function OrderRow({ product }) {
 
         <View style={{ marginLeft: "9%" }}>
           <TextInput
+            value={amount == 0 ? "" : amount}
             keyboardType="numeric"
             style={styles.textInput}
             mode="outlined"
