@@ -20,16 +20,20 @@ export default function MainStackNavigator() {
         component={MainTabNavigator}
         options={{ headerShown: false }}
       ></Stack.Screen>
-       <Stack.Screen
+      <Stack.Screen
         name="Budget"
         component={Budget}
-        options={{ headerShown: true }}
+        options={{
+          title: "Orçamento",
+          headerShown: true,
+          headerTintColor: "white",
+          headerTitleStyle:{ fontSize: 18},
+          headerStyle: {
+            backgroundColor: "#253743",
+          },
+        }}
       ></Stack.Screen>
-       <Stack.Screen
-        name="Order"
-        component={Order}
-        options={{ headerShown: true }}
-      ></Stack.Screen>
+      <Stack.Screen name="Order" component={Order}></Stack.Screen>
     </Stack.Navigator>
   );
 }

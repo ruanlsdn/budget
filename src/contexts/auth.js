@@ -20,6 +20,7 @@ function AuthProvider({ children }) {
         setUser(response);
         navigation.navigate("Main");
       }else{
+        setAnimating(false)
         setSnackBar(true);
       }
     }
