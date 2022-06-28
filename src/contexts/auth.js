@@ -1,7 +1,7 @@
-import React, { createContext, useState, useContext } from "react";
-import { findUser } from "../services/ApiRequest";
 import { useNavigation } from "@react-navigation/native";
-import { ProductsContext } from "../contexts/products";
+import { createContext, useState } from "react";
+import { findUser } from "../services/ApiRequest";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const AuthContext = createContext({});
 
@@ -16,11 +16,22 @@ function AuthProvider({ children }) {
       const response = await (await findUser(user, password)).data;
 
       if (response) {
-        setAnimating(false)
+        setAnimating(false);
         setUser(response);
-        navigation.navigate("Main");
-      }else{
-        setAnimating(false)
+        const promise = async () => {
+          const response = await AsyncStorage.getAllKeys();
+
+          if (response.length <= 1) {
+            await AsyncStorage.setItem("@isLoggedIn", "true");
+            await AsyncStorage.setItem("@username", user);
+            await AsyncStorage.setItem("@password", password);
+          }
+
+          navigation.navigate("Main");
+        };
+        promise();
+      } else {
+        setAnimating(false);
         setSnackBar(true);
       }
     }
@@ -28,7 +39,14 @@ function AuthProvider({ children }) {
 
   return (
     <AuthContext.Provider
-      value={{ user: user, signIn, snackBar: snackBar, setSnackBar, animating:animating, setAnimating }}
+      value={{
+        user: user,
+        signIn,
+        snackBar: snackBar,
+        setSnackBar,
+        animating: animating,
+        setAnimating,
+      }}
     >
       {children}
     </AuthContext.Provider>

@@ -1,20 +1,47 @@
-import { useContext, useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useContext, useEffect, useState } from "react";
 import {
-  Image, KeyboardAvoidingView, StyleSheet,
+  Image,
+  KeyboardAvoidingView,
+  StyleSheet,
   Text,
   TouchableOpacity,
-  View
+  View,
 } from "react-native";
 import * as Animatable from "react-native-animatable";
-import { ActivityIndicator, Colors, Snackbar, TextInput } from "react-native-paper";
+import {
+  ActivityIndicator,
+  Colors,
+  Snackbar,
+  TextInput,
+} from "react-native-paper";
 import { AuthContext } from "../../contexts/auth";
+import * as LocalAuthentication from "expo-local-authentication";
 
 export default function Login() {
-  const { signIn, snackBar, setSnackBar, animating, setAnimating} = useContext(AuthContext);
+  const { signIn, snackBar, setSnackBar, animating, setAnimating } =
+    useContext(AuthContext);
   const [username, setUsername] = useState(null);
   const [password, setPassword] = useState(null);
   const [security, setSecurity] = useState(true);
   const onDismissSnack = () => setSnackBar(false);
+
+  useEffect(() => {
+    const promise = async () => {
+      const response = await AsyncStorage.getItem("@isLoggedIn");
+      if (response.length == 4) {
+        const biometricsResponse = await LocalAuthentication.authenticateAsync({
+          promptMessage: "Budget",
+          disableDeviceFallback: false,
+        });
+        if(biometricsResponse.success){
+          signIn(await AsyncStorage.getItem("@username"), await AsyncStorage.getItem("@password"))
+          setAnimating(true)
+        }
+      }
+    };
+    promise();
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -58,18 +85,28 @@ export default function Login() {
             label="Senha"
             secureTextEntry={security}
             activeOutlineColor="black"
-            right={<TextInput.Icon name="eye" onPress={() => setSecurity(!security)} />}
+            right={
+              <TextInput.Icon
+                name="eye"
+                onPress={() => setSecurity(!security)}
+              />
+            }
           />
           <TouchableOpacity
             onPress={() => {
-              setAnimating(true)
-              signIn(username, password)
+              setAnimating(true);
+              signIn(username, password);
             }}
             style={styles.button}
           >
             <Text style={{ color: "#FFF" }}>Acessar</Text>
           </TouchableOpacity>
-          <ActivityIndicator style={{marginTop: 50}} size="large" animating={animating} color={Colors.black} />
+          <ActivityIndicator
+            style={{ marginTop: 50 }}
+            size="large"
+            animating={animating}
+            color={Colors.black}
+          />
         </KeyboardAvoidingView>
       </Animatable.View>
 

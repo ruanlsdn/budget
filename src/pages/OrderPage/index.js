@@ -5,7 +5,7 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View
+  View,
 } from "react-native";
 import { Divider } from "react-native-paper";
 import Icon from "react-native-vector-icons/Feather";

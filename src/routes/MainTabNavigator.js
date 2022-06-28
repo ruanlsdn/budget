@@ -6,6 +6,7 @@ import Order from "../pages/OrderPage";
 import Products from "../pages/ProductsPage";
 import { useNavigation } from "@react-navigation/native";
 import { SelectedProductsContext } from "../contexts/selectedProducts";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -29,13 +30,22 @@ export default function MainTabNavigator() {
           "Deseja sair de sua conta?",
           "Você será redirecionado para a tela de login.",
           [
-            { text: "Não", style: "cancel", onPress: () => {} },
+            {
+              text: "Não",
+              style: "cancel",
+              onPress: () => {},
+            },
             {
               text: "Sair",
               style: "destructive",
               onPress: () => {
                 navigation.dispatch(action);
                 reset();
+                const promise = async () => {
+                  await AsyncStorage.setItem("@isLoggedIn", "false");
+                  await AsyncStorage.multiRemove(["@username", "@password"]);
+                };
+                promise();
               },
             },
           ]
