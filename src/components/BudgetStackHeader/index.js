@@ -7,10 +7,11 @@ import { TextInput } from "react-native-paper";
 import Icon from "react-native-vector-icons/Feather";
 import { ProductsContext } from "../../contexts/products";
 import { SelectedProductsContext } from "../../contexts/selectedProducts";
+import * as FileSystem from "expo-file-system";
 
 export default function headerRight() {
   const [modal, setModal] = useState(false);
-  const [nome, setNome] = useState('');
+  const [nome, setNome] = useState("");
   const date = new Date();
   const { products } = useContext(ProductsContext);
   const { selectedProducts, reset, setResetFlag } = useContext(
@@ -170,8 +171,22 @@ td, th {
 `;
 
   const generatePdf = async () => {
-   setModal(false)
-    await shareAsync((await Print.printToFileAsync({ html: html })).uri);
+    setModal(false);
+    const response = await Print.printToFileAsync({ html: html });
+    const pdfName = `${response.uri.slice(
+      0,
+      response.uri.lastIndexOf("/") + 1
+    )}pedido_${nome}_${date.getDate()}_${
+      date.getMonth().toString().length < 2
+        ? "0" + (date.getMonth() + 1)
+        : date.getMonth() + 1
+    }_${date.getFullYear()}.pdf`;
+
+    await FileSystem.moveAsync({
+      from: response.uri,
+      to: pdfName,
+    });
+    await shareAsync(pdfName);
   };
 
   return (
