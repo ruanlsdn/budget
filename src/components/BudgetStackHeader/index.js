@@ -8,6 +8,7 @@ import Icon from "react-native-vector-icons/Feather";
 import { ProductsContext } from "../../contexts/products";
 import { SelectedProductsContext } from "../../contexts/selectedProducts";
 import * as FileSystem from "expo-file-system";
+import { captureScreen } from "react-native-view-shot";
 
 export default function headerRight() {
   const [modal, setModal] = useState(false);
@@ -189,6 +190,13 @@ td, th {
     await shareAsync(pdfName);
   };
 
+  const captureAndShare = () => {
+    setTimeout(async () => {
+      const response = await captureScreen();
+      await shareAsync(response);
+    }, 500);
+  };
+
   return (
     <>
       <Modal animationType="slide" transparent={true} visible={modal}>
@@ -235,6 +243,9 @@ td, th {
           </View>
         </View>
       </Modal>
+      <TouchableOpacity style={{ marginRight: 20 }} onPress={captureAndShare}>
+        <Icon color="white" name="share-2" size={20} />
+      </TouchableOpacity>
       <TouchableOpacity
         onPress={() => setModal(true)}
         style={{ marginRight: 20 }}
