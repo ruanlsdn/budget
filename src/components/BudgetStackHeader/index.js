@@ -3,16 +3,27 @@ import * as FileSystem from "expo-file-system";
 import * as Print from "expo-print";
 import { shareAsync } from "expo-sharing";
 import { useContext, useState } from "react";
-import { Modal, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  Modal,
+  Platform,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { TextInput } from "react-native-paper";
 import Icon from "react-native-vector-icons/Feather";
 import { captureScreen } from "react-native-view-shot";
 import { ProductsContext } from "../../contexts/products";
 import { SelectedProductsContext } from "../../contexts/selectedProducts";
+import DateTimePicker from "@react-native-community/datetimepicker";
 
 export default function headerRight() {
+  const [dataEntrega, setDataEntrega] = useState(null);
+  const [horaEntrega, setHoraEntrega] = useState(null);
   const [modal, setModal] = useState(false);
   const [nome, setNome] = useState("");
+  const [endereco, setEndereco] = useState("");
   const [isPrinting, setIsPrinting] = useState(false);
   const date = new Date();
   const { products } = useContext(ProductsContext);
@@ -102,8 +113,19 @@ export default function headerRight() {
             <b style="font-size: 45px">===========================================</b>
           </div>
           <div style="display: flex; flex-direction: column;" >
-            <b style="font-size: 60px">CLIENTE: ${nome}</b>
-            <b style="font-size: 60px">DATA DE ENTREGA: </b>
+            <b style="font-size: 60px">CLIENTE: ${
+              nome ? nome.toUpperCase() : ""
+            }</b>
+            <b style="font-size: 60px">ENDEREÇO: ${
+              endereco ? endereco.toUpperCase() : ""
+            }</b>
+            <b style="font-size: 60px">AGENDADO PARA:  ${
+              dataEntrega ? dataEntrega : ""
+            }  ${
+    horaEntrega
+      ? " - " + new Date(horaEntrega).toLocaleTimeString().substring(0, 5)
+      : ""
+  }</b>
             <b style="font-size: 45px">===========================================</b>
           </div>
           <div style="display: flex; flex-direction: column; align-items: center; justify-content: center;" >
@@ -147,15 +169,11 @@ export default function headerRight() {
                   date.getDate().toString().length < 2
                     ? "0" + date.getDate()
                     : date.getDate()
-                }
-                /
-                ${
-                  date.getMonth().toString().length < 2
-                    ? "0" + (date.getMonth() + 1)
-                    : date.getMonth() + 1
-                }
-                /
-                ${date.getFullYear()} às ${date.toLocaleTimeString("pt-BR")}.
+                }/${
+    date.getMonth().toString().length < 2
+      ? "0" + (date.getMonth() + 1)
+      : date.getMonth() + 1
+  }/${date.getFullYear()} às ${date.toLocaleTimeString("pt-BR")}.
             </b>
           </div>
       </body>
@@ -298,7 +316,13 @@ export default function headerRight() {
       from: response.uri,
       to: pdfName,
     });
+
     await shareAsync(pdfName);
+
+    setNome("");
+    setEndereco("");
+    setDataEntrega(null);
+    setHoraEntrega(null);
   };
 
   const generatePdf = async () => {
@@ -322,6 +346,11 @@ export default function headerRight() {
       to: pdfName,
     });
     await shareAsync(pdfName);
+
+    setNome("");
+    setEndereco("");
+    setDataEntrega(null);
+    setHoraEntrega(null);
   };
 
   const captureAndShare = () => {
@@ -331,11 +360,51 @@ export default function headerRight() {
     }, 500);
   };
 
+  const [show, setShow] = useState(false);
+  const [showTime, setShowTime] = useState(false);
+
+  const onChangeDate = (event, selectedDate) => {
+    const currentDate = new Date(selectedDate);
+    setShow(false);
+    setDataEntrega(`${
+      currentDate.getDate().toString().length < 2
+        ? "0" + currentDate.getDate()
+        : currentDate.getDate()
+    }/${
+      currentDate.getMonth().toString().length < 2
+        ? "0" + (currentDate.getMonth() + 1)
+        : currentDate.getMonth() + 1
+    }/${currentDate.getFullYear()}
+    `);
+  };
+
+  const onChangeTime = (event, selectedDate) => {
+    const currentDate = selectedDate;
+    setShowTime(false);
+    setHoraEntrega(currentDate);
+  };
+
   return (
     <>
       <Modal animationType="slide" transparent={true} visible={modal}>
         <View style={styles.centeredView}>
-          <View style={styles.modalView}>
+          <View
+            style={{
+              padding: 15,
+              height: !isPrinting ? 250 : 350,
+              width: "90%",
+              backgroundColor: "white",
+              borderRadius: 20,
+              shadowColor: "#000",
+              shadowOffset: {
+                width: 0,
+                height: 2,
+              },
+              shadowOpacity: 0.25,
+              shadowRadius: 4,
+              elevation: 5,
+            }}
+          >
             <View style={styles.modalHeader}>
               <Text
                 style={{
@@ -370,22 +439,52 @@ export default function headerRight() {
               }}
               label="Nome do cliente"
             />
-            {/* <TouchableOpacity
-              style={{
-                height: 50,
-                backgroundColor: "#253743",
-                borderRadius: 5,
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-              onPress={() => {
-                setOpen(true);
-              }}
-            >
-              <Text style={{ color: "#FFF", fontSize: 15 }}>
-                DATA DE ENTREGA
-              </Text>
-            </TouchableOpacity> */}
+            {isPrinting ? (
+              <>
+                <TextInput
+                  onChangeText={(text) => setEndereco(text)}
+                  mode="outlined"
+                  activeOutlineColor="black"
+                  style={{
+                    borderRadius: 5,
+                    height: 50,
+                    backgroundColor: "white",
+                  }}
+                  label="Endereço do cliente"
+                />
+                <View style={{ display: "flex", flexDirection: "row" }}>
+                  <TouchableOpacity
+                    style={{
+                      height: 50,
+                      width: "50%",
+                      backgroundColor: "#253743",
+                      borderRadius: 5,
+                      marginTop: 6,
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                    onPress={() => setShow(true)}
+                  >
+                    <Text style={{ color: "#FFF", fontSize: 15 }}>DATA</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={{
+                      height: 50,
+                      width: "50%",
+                      backgroundColor: "#253743",
+                      borderRadius: 5,
+                      marginTop: 6,
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                    onPress={() => setShowTime(true)}
+                  >
+                    <Text style={{ color: "#FFF", fontSize: 15 }}>HORA</Text>
+                  </TouchableOpacity>
+                </View>
+              </>
+            ) : null}
+
             {isPrinting ? (
               <TouchableOpacity style={styles.buttonForm} onPress={generateTxt}>
                 <Text style={{ color: "#FFF" }}>IMPRIMIR</Text>
@@ -413,7 +512,7 @@ export default function headerRight() {
       </TouchableOpacity>
       <TouchableOpacity
         onPress={() => {
-          setIsPrinting(true);
+          setIsPrinting(false);
           setModal(true);
         }}
         style={{ marginRight: 20 }}
@@ -422,12 +521,30 @@ export default function headerRight() {
       </TouchableOpacity>
       <TouchableOpacity
         onPress={() => {
-          setIsPrinting(false);
+          setIsPrinting(true);
           setModal(true);
         }}
       >
         <Icon color="white" name="printer" size={20} />
       </TouchableOpacity>
+      {show && (
+        <DateTimePicker
+          testID="dateTimePicker"
+          value={date}
+          mode={"date"}
+          is24Hour={true}
+          onChange={onChangeDate}
+        />
+      )}
+      {showTime && (
+        <DateTimePicker
+          testID="dateTimePicker"
+          value={date}
+          mode={"time"}
+          is24Hour={true}
+          onChange={onChangeTime}
+        />
+      )}
     </>
   );
 }
