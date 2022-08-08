@@ -161,7 +161,7 @@ export default function headerRight() {
             <b style="font-size: 60px">R$ ${totalSum.toFixed(2)}</b>
           </div>
           <b style="font-size: 45px">===========================================</b>
-          <div style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+          <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; margin-top: 50px">
             <b style="font-size: 60px">***ESTE NÃO É UM TICKET FISCAL***</b>
             <b style="font-size: 45px; text-align: center; margin-top: 50px">
               Ticket gerado em 
