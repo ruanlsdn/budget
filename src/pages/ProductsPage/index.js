@@ -84,9 +84,9 @@ export default function Products() {
               style={styles.buttonForm}
               onPress={() =>
                 create({
-                  product: description,
-                  price: price,
-                  ownerId: user.id,
+                  description: description,
+                  price: Number(price),
+                  user_id: user.id,
                 })
               }
             >
@@ -147,8 +147,8 @@ export default function Products() {
               style={styles.buttonForm}
               onPress={() => {
                 update(newId, {
-                  product: newDescription,
-                  price: newPrice,
+                  description: newDescription,
+                  price: Number(newPrice),
                 });
               }}
             >
@@ -184,6 +184,9 @@ export default function Products() {
                   </>
                 ))}
               </View>
+              {/* <View style={{ height: 50 }}>
+                <Text></Text>
+              </View> */}
             </ScrollView>
           </>
         )}

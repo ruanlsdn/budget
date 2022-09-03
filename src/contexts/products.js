@@ -33,7 +33,7 @@ function ProductsProvider({ children }) {
 
   async function update(id, body) {
     const response = await (await updateProduct(id, body)).status;
-    response === 201 ? setController(!controller) : null;
+    response === 200 ? setController(!controller) : null;
     setModalUpdate(false);
   }
 
@@ -42,14 +42,11 @@ function ProductsProvider({ children }) {
     setProducts(response);
   }
 
-  async function findById(id) {
-    const response = await (await findProductById(id)).data;
-    if (response) {
-      setNewId(response.id);
-      setNewDescription(response.description);
-      setNewPrice(response.price);
-      setModalUpdate(true);
-    }
+  async function findById(product) {
+    setNewId(product.id);
+    setNewDescription(product.description);
+    setNewPrice(product.price);
+    setModalUpdate(true);
   }
 
   async function remove(id) {

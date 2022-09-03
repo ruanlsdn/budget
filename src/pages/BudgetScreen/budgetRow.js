@@ -3,10 +3,15 @@ import { View, Text, StyleSheet } from "react-native";
 
 export default function BudgetRow({ item, prices, sum }) {
   let calc = 0;
+  let pct = "";
   prices.push(item.product.price * item.amount);
   prices.forEach((price) => (calc = calc + price));
   sum.pop();
   sum.push(parseFloat(calc).toFixed(2));
+
+  if (item.product.description.includes("Queijo Coalho"))
+    pct = parseFloat(item.product.price * 6).toFixed(2);
+  else pct = parseFloat(item.product.price * 5).toFixed(2);
 
   return (
     <View style={styles.row}>
@@ -44,7 +49,7 @@ export default function BudgetRow({ item, prices, sum }) {
           justifyContent: "center",
         }}
       >
-        <Text>{"R$" + parseFloat(item.product.price * 5).toFixed(2)}</Text>
+        <Text>{"R$" + pct}</Text>
       </View>
       <View
         style={{

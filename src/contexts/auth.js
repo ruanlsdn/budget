@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import { createContext, useState } from "react";
-import { findUser } from "../services/ApiRequest";
+import { login } from "../services/ApiRequest";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const AuthContext = createContext({});
@@ -13,7 +13,7 @@ function AuthProvider({ children }) {
 
   async function signIn(user, password) {
     if (user !== "" && password !== "") {
-      const response = await (await findUser(user, password)).data;
+      const response = await (await login({ name: user, password })).data;
 
       if (response) {
         setAnimating(false);
