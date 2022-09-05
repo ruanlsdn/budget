@@ -74,17 +74,18 @@ export default function Budget() {
                 <Divider style={{ height: 3 }} />
               </>
             ))}
-          </View>
-          <View
-            style={{
-              flexDirection: "row",
-              width: "100%",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <Text style={styles.sumText}>Total do Pedido: R$</Text>
-            <Text style={styles.sumText}>{sum}</Text>
+            <View
+              style={{
+                flexDirection: "row",
+                width: "100%",
+                alignItems: "center",
+                justifyContent: "center",
+                marginTop: 15,
+              }}
+            >
+              <Text style={styles.sumText}>Total do Pedido: R$</Text>
+              <Text style={styles.sumText}>{sum}</Text>
+            </View>
           </View>
         </>
       )}
