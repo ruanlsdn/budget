@@ -179,7 +179,7 @@ export default function headerRight() {
                     ? "0" + date.getDate()
                     : date.getDate()
                 }/${
-    date.getMonth().toString().length < 2
+    (date.getMonth() + 1).toString().length < 2
       ? "0" + (date.getMonth() + 1)
       : date.getMonth() + 1
   }/${date.getFullYear()} às ${date.toLocaleTimeString("pt-BR")}.
@@ -292,7 +292,7 @@ export default function headerRight() {
              <tr>
                 <th>
                    <b>Documento gerado em ${date.getDate()}/${
-    date.getMonth().toString().length < 2
+    (date.getMonth() + 1).toString().length < 2
       ? "0" + (date.getMonth() + 1)
       : date.getMonth() + 1
   }/${date.getFullYear()} às ${date.toLocaleTimeString(
@@ -316,7 +316,7 @@ export default function headerRight() {
         ? "0" + date.getDate()
         : date.getDate()
     }_${
-      date.getMonth().toString().length < 2
+      (date.getMonth() + 1).toString().length < 2
         ? "0" + (date.getMonth() + 1)
         : date.getMonth() + 1
     }_${date.getFullYear()}.pdf`;
