@@ -6,3 +6,4 @@ Aplicativo desenvolvido em React Native para geração e compartilhamento de or�
 - geração de orçamentos;
 - compartilhamento do orçamento nas redes sociais;
 - geração e impressão do orçamento em arquivo PDF;
+- geração e impressão do orçamento no formato de nota fiscal;
