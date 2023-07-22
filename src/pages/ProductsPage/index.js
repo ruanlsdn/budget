@@ -177,10 +177,10 @@ export default function Products() {
             <ScrollView style={{ flex: 1 }}>
               <View style={styles.tableRows}>
                 <Divider style={{ height: 3 }} />
-                {products.map((product) => (
+                {products.map((product, index) => (
                   <>
-                    <ProductRow product={product} />
-                    <Divider style={{ height: 3 }} />
+                    <ProductRow key={index} product={product} />
+                    <Divider key={index+1} style={{ height: 3 }} />
                   </>
                 ))}
               </View>
