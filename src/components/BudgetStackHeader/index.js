@@ -120,7 +120,7 @@ export default function headerRight() {
       </head>
       <body>
           <div style="display: flex; flex-direction: column; align-items: center; justify-content: center;" >
-            <b style="font-size: 60px">${user.name}</b>
+            <b style="font-size: 60px">${user.name === "rc" ? "RC CHURRASCO" : user.name}</b>
             <b style="font-size: 45px">===========================================</b>
           </div>
           <div style="display: flex; flex-direction: column;" >

@@ -4,7 +4,6 @@
     "slug": "Budget",
     "version": "1.0.0",
     "orientation": "portrait",
-    "plugins": ["./test-fix.js"],
     "icon": "./assets/icon.png",
     "androidStatusBar": {
       "barStyle": "light-content",
