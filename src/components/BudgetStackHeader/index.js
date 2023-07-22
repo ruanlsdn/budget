@@ -528,15 +528,17 @@ export default function headerRight() {
       >
         <Icon color="white" name="refresh-cw" size={20} />
       </TouchableOpacity>
-      <TouchableOpacity
-        onPress={() => {
-          setIsPrinting(false);
-          setModal(true);
-        }}
-        style={{ marginRight: 20 }}
-      >
-        <Icon color="white" name="file-text" size={20} />
-      </TouchableOpacity>
+      {user.name === "rc" && (
+        <TouchableOpacity
+          onPress={() => {
+            setIsPrinting(false);
+            setModal(true);
+          }}
+          style={{ marginRight: 20 }}
+        >
+          <Icon color="white" name="file-text" size={20} />
+        </TouchableOpacity>
+      )}
       <TouchableOpacity
         onPress={() => {
           setIsPrinting(true);

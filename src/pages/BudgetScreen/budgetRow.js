@@ -27,11 +27,12 @@ export default function BudgetRow({ item, prices, sum, isRc }) {
       <View
         style={{
           width: `${isRc ? "35%" : "43%"}`,
+          display: "flex",
           alignItems: "center",
           justifyContent: "center",
         }}
       >
-        <Text>{item.product.description}</Text>
+        <Text style={{textAlign: "center"}}>{item.product.description}</Text>
       </View>
       <View
         style={{
