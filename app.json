@@ -4,6 +4,7 @@
     "slug": "Budget",
     "version": "1.0.0",
     "orientation": "portrait",
+    "plugins": ["./test-fix.js"],
     "icon": "./assets/icon.png",
     "androidStatusBar": {
       "barStyle": "light-content",
@@ -25,7 +26,9 @@
       "supportsTablet": true
     },
     "android": {
-      "permissions":["USE_FINGERPRINT"],
+      "permissions": [
+        "USE_FINGERPRINT"
+      ],
       "package": "notesgenerator.app",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
@@ -34,6 +37,11 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "5c49f192-6493-4a74-8d30-5b4b14f20866"
+      }
     }
   }
 }

@@ -3,11 +3,14 @@ import { View, Text, StyleSheet } from "react-native";
 import BudgetRow from "./budgetRow";
 import { Divider } from "react-native-paper";
 import { SelectedProductsContext } from "../../contexts/selectedProducts";
+import { AuthContext } from "../../contexts/auth";
 
 export default function Budget() {
   let prices = [];
   let sum = [];
   const { selectedProducts } = useContext(SelectedProductsContext);
+  const { user } = useContext(AuthContext)
+  const isRc = user.name === "rc"
 
   return (
     <View style={styles.contentContainer}>
@@ -29,7 +32,7 @@ export default function Budget() {
             </View>
             <View
               style={{
-                width: "35%",
+                width: `${isRc ? "35%" : "43%"}`,
                 alignItems: "center",
                 justifyContent: "center",
               }}
@@ -39,25 +42,27 @@ export default function Budget() {
 
             <View
               style={{
-                width: "17%",
+                width: `${isRc ? "17%" : "21%"}`,
                 alignItems: "center",
                 justifyContent: "center",
               }}
             >
               <Text style={styles.tableHeaderText}>Unidade</Text>
             </View>
+            {isRc && (
+              <View
+                style={{
+                  width: "17%",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <Text style={styles.tableHeaderText}>Pacote</Text>
+              </View>
+            )}
             <View
               style={{
-                width: "17%",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <Text style={styles.tableHeaderText}>Pacote</Text>
-            </View>
-            <View
-              style={{
-                width: "17%",
+                width: `${isRc ? "17%" : "21%"}`,
                 alignItems: "center",
                 justifyContent: "center",
               }}
@@ -70,7 +75,12 @@ export default function Budget() {
             <Divider style={{ height: 3 }} />
             {selectedProducts.map((item) => (
               <>
-                <BudgetRow prices={prices} item={item} sum={sum} />
+                <BudgetRow
+                  prices={prices}
+                  item={item}
+                  sum={sum}
+                  isRc={isRc}
+                />
                 <Divider style={{ height: 3 }} />
               </>
             ))}

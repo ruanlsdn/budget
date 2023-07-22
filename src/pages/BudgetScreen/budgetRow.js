@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 
-export default function BudgetRow({ item, prices, sum }) {
+export default function BudgetRow({ item, prices, sum, isRc }) {
   let calc = 0;
   let pct = "";
   prices.push(item.product.price * item.amount);
@@ -26,7 +26,7 @@ export default function BudgetRow({ item, prices, sum }) {
       </View>
       <View
         style={{
-          width: "35%",
+          width: `${isRc ? "35%" : "43%"}`,
           alignItems: "center",
           justifyContent: "center",
         }}
@@ -35,25 +35,27 @@ export default function BudgetRow({ item, prices, sum }) {
       </View>
       <View
         style={{
-          width: "17%",
+          width: `${isRc ? "17%" : "21%"}`,
           alignItems: "center",
           justifyContent: "center",
         }}
       >
         <Text>{"R$" + parseFloat(item.product.price).toFixed(2)}</Text>
       </View>
+      {isRc && (
+        <View
+          style={{
+            width: "17%",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Text>{"R$" + pct}</Text>
+        </View>
+      )}
       <View
         style={{
-          width: "17%",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <Text>{"R$" + pct}</Text>
-      </View>
-      <View
-        style={{
-          width: "17%",
+          width: `${isRc ? "17%" : "21%"}`,
           alignItems: "center",
           justifyContent: "center",
         }}

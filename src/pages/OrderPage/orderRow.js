@@ -56,7 +56,7 @@ export default function OrderRow({ product, index }) {
             justifyContent: "center",
           }}
         >
-          <Text style={{ fontSize: 18 }}>{product.description}</Text>
+          <Text style={{ fontSize: 18, textAlign: "center" }}>{product.description}</Text>
         </View>
 
         <View style={{ marginLeft: "9%" }}>

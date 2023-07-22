@@ -18,8 +18,10 @@ import { ProductsContext } from "../../contexts/products";
 import { SelectedProductsContext } from "../../contexts/selectedProducts";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { base64 } from "../../utils";
+import { AuthContext } from "../../contexts/auth";
 
 export default function headerRight() {
+  const { user } = useContext(AuthContext);
   const [dataEntrega, setDataEntrega] = useState(null);
   const [horaEntrega, setHoraEntrega] = useState(null);
   const [modal, setModal] = useState(false);
@@ -89,7 +91,7 @@ export default function headerRight() {
             <div style=" display: flex; width: 10%; align-items: center; justify-content: flex-start;">
                 <b style="font-size: 50px">${selectedProducts[j].amount}</b>
             </div>
-            <div style=" display: flex; width: 45%; align-items: center; justify-content: center;">
+            <div style=" display: flex; width: 45%; align-items: center; justify-content: center; text-align: center;">
                 <b style="font-size: ${fontSize}">${
           selectedProducts[j].product.description
         }</b>
@@ -118,23 +120,30 @@ export default function headerRight() {
       </head>
       <body>
           <div style="display: flex; flex-direction: column; align-items: center; justify-content: center;" >
-            <b style="font-size: 60px">RC CHURRASCO</b>
+            <b style="font-size: 60px">${user.name}</b>
             <b style="font-size: 45px">===========================================</b>
           </div>
           <div style="display: flex; flex-direction: column;" >
             <b style="font-size: 60px">CLIENTE: ${
               nome ? nome.toUpperCase() : ""
             }</b>
-            <b style="font-size: 60px">ENDEREÇO: ${
-              endereco ? endereco.toUpperCase() : ""
-            }</b>
-            <b style="font-size: 60px">AGENDADO PARA:  ${
-              dataEntrega ? dataEntrega : ""
-            }  ${
-    horaEntrega
-      ? " - " + new Date(horaEntrega).toLocaleTimeString().substring(0, 5)
-      : ""
-  }</b>
+            ${
+              endereco
+                ? `<b style="font-size: 60px">ENDEREÇO: ${endereco.toUpperCase()}</b>`
+                : ""
+            }
+            ${
+              dataEntrega
+                ? `<b style="font-size: 60px">AGENDADO PARA:  ${dataEntrega}  ${
+                    horaEntrega
+                      ? " - " +
+                        new Date(horaEntrega)
+                          .toLocaleTimeString()
+                          .substring(0, 5)
+                      : ""
+                  }</b>`
+                : ""
+            }
             <b style="font-size: 45px">===========================================</b>
           </div>
           <div style="display: flex; flex-direction: column; align-items: center; justify-content: center;" >
