@@ -19,7 +19,7 @@ import { AuthContext } from "../../contexts/auth";
 import * as LocalAuthentication from "expo-local-authentication";
 
 export default function Login() {
-  const { signIn, snackBar, setSnackBar, animating, setAnimating } =
+  const { signIn, snackBar, setSnackBar, animating, setAnimating, mensagem } =
     useContext(AuthContext);
   const [username, setUsername] = useState(null);
   const [password, setPassword] = useState(null);
@@ -35,8 +35,8 @@ export default function Login() {
           disableDeviceFallback: false,
         });
         if(biometricsResponse.success){
-          signIn(await AsyncStorage.getItem("@username"), await AsyncStorage.getItem("@password"))
           setAnimating(true)
+          signIn(await AsyncStorage.getItem("@username"), await AsyncStorage.getItem("@password"))
         }
       }
     };
@@ -115,7 +115,7 @@ export default function Login() {
         onDismiss={onDismissSnack}
         visible={snackBar}
       >
-        Usuário não cadastrado ou dados de autenticação incorretos.
+       {mensagem}
       </Snackbar>
     </View>
   );

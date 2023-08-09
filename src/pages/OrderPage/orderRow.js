@@ -5,7 +5,7 @@ import { Checkbox, TextInput } from "react-native-paper";
 import { SelectedProductsContext } from "../../contexts/selectedProducts";
 
 export default function OrderRow({ product, index }) {
-  const { insert, remove, update, selectedProducts, resetFlag, setResetFlag } =
+  const { upsert, remove, resetFlag, setResetFlag } =
     useContext(SelectedProductsContext);
   const [checked, setChecked] = useState(false);
   const [disabled, setDisabled] = useState(true);
@@ -21,13 +21,6 @@ export default function OrderRow({ product, index }) {
     }
   }, [isFocused]);
 
-  if (checked) {
-    for (let i = 0; i < selectedProducts.length; i++) {
-      if (selectedProducts[i].product === product) {
-        selectedProducts[i].amount = amount;
-      }
-    }
-  }
 
   return (
     <>
@@ -44,7 +37,7 @@ export default function OrderRow({ product, index }) {
             status={checked ? "checked" : "unchecked"}
             onPress={() => {
               setChecked(!checked);
-              !checked ? insert(amount, product) : remove(product);
+              !checked ? upsert(amount, product) : remove(product)  
             }}
           />
         </View>
@@ -70,11 +63,18 @@ export default function OrderRow({ product, index }) {
             onChangeText={(text) => {
               setAmount(text);
               if (text != "" && text != "0") {
+                setChecked(true)
                 setDisabled(false);
               } else {
-                remove(product);
                 setChecked(false);
                 setDisabled(true);
+              }
+            }}
+            onSubmitEditing={() => {
+              if (amount !== "" && amount !== 0 && checked) {
+                upsert(amount, product);
+              } else {
+                remove(product);
               }
             }}
           />

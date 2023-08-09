@@ -6,23 +6,23 @@ const request = axios.create({
 });
 
 // REQUESTS TO USER RESOURCE
-export function login(data) {
-  return request.post("api/v1/login", data);
+export async function login(data) {
+  return await request.post("api/v1/login", data);
 }
 
 // REQUESTS TO PRODUCT RESOURCE
-export function createProduct(data) {
-  return request.post("api/v1/product/", data);
+export async function createProduct(data) {
+  return await request.post("api/v1/product/", data);
 }
 
-export function findByOwner(userId) {
-  return request.get("api/v1/product/" + userId);
+export async function findByOwner(userId) {
+  return await request.get("api/v1/product/" + userId);
 }
 
-export function updateProduct(id, data) {
-  return request.patch("api/v1/product/" + id, data);
+export async function updateProduct(id, data) {
+  return await request.patch("api/v1/product/" + id, data);
 }
 
-export function deleteProduct(id) {
-  return request.delete("api/v1/product/" + id);
+export async function deleteProduct(id) {
+  return await request.delete("api/v1/product/" + id);
 }

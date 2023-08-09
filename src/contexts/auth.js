@@ -9,31 +9,30 @@ function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [snackBar, setSnackBar] = useState(false);
   const [animating, setAnimating] = useState(false);
+  const [mensagem, setMensagem] = useState("");
   const navigation = useNavigation();
 
   async function signIn(user, password) {
-    if (user !== "" && password !== "") {
-      const response = await (await login({ name: user, password })).data;
+    try {
+      const response = await login({ name: user, password });
 
-      if (response) {
+      if (response.status === 201) {
+        setUser(response.data);
+
+        const keys = await AsyncStorage.getAllKeys();
+        if (keys.length <= 1) {
+          await AsyncStorage.setItem("@isLoggedIn", "true");
+          await AsyncStorage.setItem("@username", user);
+          await AsyncStorage.setItem("@password", password);
+        }
+
         setAnimating(false);
-        setUser(response);
-        const promise = async () => {
-          const response = await AsyncStorage.getAllKeys();
-
-          if (response.length <= 1) {
-            await AsyncStorage.setItem("@isLoggedIn", "true");
-            await AsyncStorage.setItem("@username", user);
-            await AsyncStorage.setItem("@password", password);
-          }
-
-          navigation.navigate("Main");
-        };
-        promise();
-      } else {
-        setAnimating(false);
-        setSnackBar(true);
+        navigation.navigate("Main");
       }
+    } catch (error) {
+      setMensagem(error.message);
+      setSnackBar(true);
+      setAnimating(false);
     }
   }
 
@@ -46,6 +45,7 @@ function AuthProvider({ children }) {
         setSnackBar,
         animating: animating,
         setAnimating,
+        mensagem: mensagem,
       }}
     >
       {children}

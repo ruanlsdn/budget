@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect, useContext } from "react";
+import React, { createContext, useState } from "react";
 
 export const SelectedProductsContext = createContext({});
 
@@ -6,13 +6,18 @@ function SelectedProductsProvider({ children }) {
   const products = [];
   const [resetFlag, setResetFlag] = useState(null);
 
-  function insert(amount, product) {
-    products.push({
-      product: product,
-      amount: amount,
-    });
-    products.sort((a, b) => b.amount - a.amount);
-  }
+  upsert = (amount, product) => {
+    const index = products.findIndex((item) => item.product === product);
+
+    if (index === -1) {
+      products.push({
+        product: product,
+        amount: amount,
+      });
+    } else {
+      products[index].amount = amount;
+    }
+  };
 
   function find(product) {
     for (let i = 0; i < products.length; i++) {
@@ -21,8 +26,6 @@ function SelectedProductsProvider({ children }) {
       }
     }
   }
-
-  function update(amount, product) {}
 
   function remove(product) {
     products.splice(find(product), 1);
@@ -36,8 +39,7 @@ function SelectedProductsProvider({ children }) {
     <SelectedProductsContext.Provider
       value={{
         selectedProducts: products,
-        insert,
-        update,
+        upsert,
         remove,
         resetFlag: resetFlag,
         reset,
