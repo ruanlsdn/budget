@@ -70,7 +70,7 @@ export default function OrderRow({ product, index }) {
                 setDisabled(true);
               }
             }}
-            onSubmitEditing={() => {
+            onEndEditing={() => {
               if (amount !== "" && amount !== 0 && checked) {
                 upsert(amount, product);
               } else {
